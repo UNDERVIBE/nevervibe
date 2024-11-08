@@ -1,0 +1,155 @@
+
+body {
+    font-family: "Noto Sans Thai", sans-serif;
+    background-color: #1a1a1a; /* สีพื้นหลังเข้ม */
+    color: #ffffff; /* ตัวอักษรสีขาว */
+    margin: 0;
+    padding: 20px;
+}
+
+.container {
+    max-width: 800px;
+    margin: auto;
+}
+
+h1 {
+    text-align: center;
+    font-size: 2.5em;
+    margin-bottom: 20px;
+    color: #FFD700; /* สีทองเพื่อความหรูหรา */
+    text-transform: uppercase; /* เปลี่ยนข้อความให้เป็นตัวพิมพ์ใหญ่ */
+}
+
+.artist-card {
+    background: #2b2b2b; /* สีพื้นหลังของการ์ด */
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5); /* เงาที่ให้ความลึก */
+    margin: 15px 0;
+    padding: 20px;
+    text-align: center;
+    transition: transform 0.3s; /* การเปลี่ยนแปลงเมื่อโฮเวอร์ */
+}
+
+.artist-card:hover {
+    transform: scale(1.05); /* ขยายการ์ดเมื่อโฮเวอร์ */
+}
+
+.artist-card img {
+    width: 100%;
+    max-width: 300px; /* กำหนดขนาดสูงสุดของรูปภาพ */
+    border-radius: 8px;
+    border: 2px solid #FFD700; /* ขอบทอง */
+    margin: 0 auto; /* จัดให้อยู่กึ่งกลาง */
+}
+
+
+h2 {
+    font-size: 1.8em;
+    margin: 10px 0;
+    color: #FFD700; /* สีทอง */
+}
+
+p {
+    font-size: 1.2em;
+    color: #cccccc; /* สีเทาอ่อน */
+}
+
+/* ปรับแต่งลิงก์ให้สวยงาม */
+a {
+    color: #FFD700;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+a:hover {
+    text-decoration: underline; /* เพิ่มเส้นใต้เมื่อโฮเวอร์ */
+}
+.contact-info {
+    background: #2b2b2b; /* สีพื้นหลังเข้ม */
+    border-radius: 8px;
+    padding: 20px;
+    margin-top: 20px;
+}
+
+.contact-info h2 {
+    color: #FFD700; /* สีทอง */
+    font-size: 1.8em;
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+.contact-info p {
+    color: #cccccc; /* สีเทาอ่อน */
+    font-size: 1.2em;
+    margin: 10px 0;
+    text-align: center; /* จัดให้อยู่กลาง */
+}
+
+.contact-info a {
+    font-family: "Noto Sans Thai", sans-serif;
+    color: #FFD700; /* สีทอง */
+    text-decoration: none; /* ไม่ให้มีเส้นใต้ */
+    font-weight: bold; /* หนา */
+}
+
+.contact-info a:hover {
+    text-decoration: underline; /* เพิ่มเส้นใต้เมื่อโฮเวอร์ */
+}
+
+footer {
+    background: #1a1a1a; /* สีพื้นหลังเข้มเหมือนเว็บไซต์ */
+    color: #cccccc; /* สีตัวอักษรเทาอ่อน */
+    text-align: center; /* จัดกลาง */
+    padding: 10px 0; /* ช่องว่างด้านบนและล่าง */
+    position: relative; /* ให้ตำแหน่งสัมพันธ์กับ container */
+    bottom: 0; /* จัดให้ไปอยู่ด้านล่าง */
+    width: 100%; /* ทำให้เต็มความกว้าง */
+    font-size: 0.9em; /* ขนาดตัวอักษรเล็กลง */
+}
+
+.footer-logo {
+    width: 80px; /* ขยายขนาดโลโก้ */
+    height: auto;
+    margin-bottom: 10px;
+    opacity: 0.9;
+    transition: opacity 0.3s ease;
+}
+
+/* ปุ่มโฮม */
+.home-button {
+    display: inline-block;
+    position: fixed; /* ทำให้ปุ่มโฮมติดกับหน้าจอ */
+    top: 20px; /* ระยะจากด้านบน */
+    left: 20px; /* ระยะจากด้านซ้าย */
+    z-index: 1000; /* ลำดับชั้นเพื่อให้อยู่ด้านบนสุด */
+    text-align: center;
+}
+
+.home-button a {
+    display: inline-flex;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: #FFD700; /* สีทอง */
+    color: #1a1a1a; /* สีตัวอักษรเข้ม */
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+.home-button a:hover {
+    background-color: #e5c100; /* สีทองเข้มขึ้นเล็กน้อยเมื่อโฮเวอร์ */
+}
+
+.home-icon {
+    width: 20px;
+    height: 20px;
+    margin-right: 8px; /* เว้นระยะห่างระหว่างไอคอนกับข้อความ */
+}
+
+.youtube-video {
+    margin-top: 15px;
+    border-radius: 8px;
+    overflow: hidden; /* ทำให้ขอบวิดีโอกลมตามมุมของการ์ด */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5); /* เพิ่มเงาให้ดูน่าสนใจ */
+}

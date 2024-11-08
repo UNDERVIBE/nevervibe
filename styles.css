@@ -1,0 +1,127 @@
+/* การตั้งค่าเริ่มต้นและฟอนต์ */
+body {
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    background-color: #f7f7f7;
+    color: #333;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0;
+    padding: 0;
+    scroll-behavior: smooth;
+}
+
+h1 {
+    font-size: 2.5rem;
+    color: #444;
+    text-transform: uppercase;
+    margin-top: 40px;
+    letter-spacing: 2px;
+    animation: fadeInDown 1s ease-out;
+}
+
+.artist-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+    margin-top: 30px;
+}
+
+.artist-card {
+    width: 250px;
+    background-color: #fff;
+    border-radius: 8px;
+    text-align: center;
+    padding: 20px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.3s, transform 0.2s;
+    text-decoration: none; /* นำเส้นใต้ลิงก์ออก */
+    color: inherit; /* ใช้สีของข้อความตามที่กำหนดในแต่ละองค์ประกอบ */
+}
+
+.artist-card:hover {
+    box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.2);
+    transform: translateY(-5px);
+}
+
+.artist-card img {
+    width: 100%;
+    height: auto;
+    border-radius: 50%;
+    border: 2px solid #ddd;
+    box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.1);
+}
+
+.artist-name {
+    font-size: 1.2rem;
+    font-weight: 500;
+    margin-top: 12px;
+    color: #333;
+    text-transform: capitalize;
+    letter-spacing: 1px;
+}
+
+.add-artist-btn {
+    margin-top: 40px;
+    padding: 12px 30px;
+    font-size: 1rem;
+    color: #fff;
+    background-color: #007bff;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s, transform 0.3s;
+    box-shadow: 0px 4px 8px rgba(0, 123, 255, 0.2);
+}
+
+.add-artist-btn:hover {
+    background-color: #0056b3;
+    transform: scale(1.05);
+}
+
+.add-artist-btn:active {
+    transform: scale(0.98);
+}
+
+/* โลโก้ */
+.logo {
+    width: 120px; /* ปรับขนาดโลโก้ */
+    height: auto;
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+
+footer {
+    margin-top: 40px;
+    font-size: 0.8rem;
+    color: #777;
+    text-align: center;
+    padding: 20px 0;
+    width: 100%;
+    border-top: 1px solid #ddd;
+    background-color: #f7f7f7;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
