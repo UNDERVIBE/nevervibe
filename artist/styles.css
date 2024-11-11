@@ -153,3 +153,10 @@ footer {
     overflow: hidden; /* ทำให้ขอบวิดีโอกลมตามมุมของการ์ด */
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5); /* เพิ่มเงาให้ดูน่าสนใจ */
 }
+
+.soundcloud-preview {
+    margin-top: 15px;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+}
