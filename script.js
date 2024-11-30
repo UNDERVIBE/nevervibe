@@ -4,6 +4,7 @@ const artists = [
     { name: "FEAR", image: "image/artist3.jpg", url: "artist/fear.html" },
     { name: "B$TN", image: "image/artist4.jpg", url: "artist/B$TN.html" },
     { name: "MIN4RI", image: "image/artist5.jpg", url: "artist/min4ri.html" },
+    { name: "T4NN", image: "image/artist6.jpg", url: "artist/T4NN.html" },
 ];
 
 function displayArtists() {
