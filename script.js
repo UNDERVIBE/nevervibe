@@ -8,31 +8,34 @@ const artists = [
     { name: "AKITO†", image: "image/artist7.jpg", url: "artist/AKITO.html" },
 ];
 
-function displayArtists() {
-    const container = document.getElementById('artistContainer');
-    container.innerHTML = ''; // Clear previous content
+const producers = [
+    { name: "REDD0T", image: "image/reddot.jpg", url: "#" },
+];
 
-    artists.forEach(artist => {
-        // สร้างลิงก์หลักสำหรับการ์ดของศิลปิน
-        const artistLink = document.createElement('a');
-        artistLink.href = artist.url;
-        artistLink.target = "_self"; // เปิดในหน้าเดียวกัน
-        artistLink.classList.add('artist-card');
+function displayItems(containerId, items) {
+    const container = document.getElementById(containerId);
+    container.innerHTML = '';
 
-        // สร้างการ์ดของศิลปินภายในลิงก์
+    items.forEach(item => {
+        const itemLink = document.createElement('a');
+        itemLink.href = item.url;
+        itemLink.classList.add('artist-card');
+
         const img = document.createElement('img');
-        img.src = artist.image;
-        img.alt = artist.name;
+        img.src = item.image;
+        img.alt = item.name;
 
         const name = document.createElement('div');
         name.classList.add('artist-name');
-        name.textContent = artist.name;
+        name.textContent = item.name;
 
-        artistLink.appendChild(img);
-        artistLink.appendChild(name);
-        container.appendChild(artistLink);
+        itemLink.append(img, name);
+        container.appendChild(itemLink);
     });
 }
 
-// Display initial artists
-displayArtists();
+// Display Artists & Producers
+document.addEventListener('DOMContentLoaded', () => {
+    displayItems('artistContainer', artists);
+    displayItems('producerContainer', producers);
+});
