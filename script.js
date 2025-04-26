@@ -6,11 +6,11 @@ const artists = [
     { name: "MIN4RI", image: "image/artist5.jpg", url: "artist/min4ri.html" },
     { name: "T4NN", image: "image/artist6.jpg", url: "artist/T4NN.html" },
     { name: "AKITO†", image: "image/artist7.jpg", url: "artist/AKITO.html" },
-    { name: "T!WLY", image: "image/artist8.png", url: "artist/T!WLY.html" },
+    ///{ name: "T!WLY", image: "image/artist8.png", url: "artist/T!WLY.html" },
 ];
 
 const producers = [
-    { name: "REDD0T", image: "image/reddot.jpg", url: "#" },
+   /// { name: "REDD0T", image: "image/reddot.jpg", url: "#" },
 ];
 
 function displayItems(containerId, items) {
