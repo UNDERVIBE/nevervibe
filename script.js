@@ -22,10 +22,12 @@ function displayItems(containerId, items) {
         const itemLink = document.createElement('a');
         itemLink.href = item.url;
         itemLink.classList.add('artist-card');
+        itemLink.dataset.tapped = 'false';
 
         const img = document.createElement('img');
         img.src = item.image;
         img.alt = item.name;
+        img.classList.add('artist-image');
 
         const name = document.createElement('div');
         name.classList.add('artist-name');
@@ -33,6 +35,18 @@ function displayItems(containerId, items) {
 
         itemLink.append(img, name);
         container.appendChild(itemLink);
+
+        // ✅ บนมือถือเท่านั้น: แตะครั้งแรกโชว์รูป, แตะอีกครั้งไปหน้า
+        itemLink.addEventListener('click', (e) => {
+            if (window.innerWidth <= 768) {
+                if (itemLink.dataset.tapped === 'false') {
+                    e.preventDefault();
+                    itemLink.dataset.tapped = 'true';
+                } else {
+                    window.location.href = item.url;
+                }
+            }
+        });
     });
 }
 
@@ -57,3 +71,4 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 });
+
