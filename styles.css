@@ -1,247 +1,162 @@
-/* ฟอนต์ใหม่ (แนะนำใช้ Inter หรือ Playfair) */
+
 body {
-    font-family: 'Inter', 'Noto Sans Thai', sans-serif;
-    background: linear-gradient(135deg, #0f0f0f, #1a1a1a);
-    color: #e0e0e0;
+    font-family: "Noto Sans Thai", sans-serif;
+    background-color: #1a1a1a; /* สีพื้นหลังเข้ม */
+    color: #ffffff; /* ตัวอักษรสีขาว */
     margin: 0;
-    padding: 0;
-    scroll-behavior: smooth;
-    overflow-x: hidden;
-}
-html {
-    max-width: 100%;
-    overflow-x: hidden;
-}
-/* HEADER */
-header {
-    text-align: center;
-    padding: 30px 20px;
-    background: transparent;
-    animation: fadeInDown 1s ease-out;
-}
-
-.logo {
-    width: 120px;
-    filter: drop-shadow(0 4px 10px rgba(255, 255, 255, 0.2));
-}
-
-.label {
-    font-size: 2.2rem;
-    color: #f5f5f5;
-    letter-spacing: 4px;
-    font-weight: 700;
-    text-shadow: 0 2px 10px rgba(255, 255, 255, 0.2);
-}
-
-/* MAIN & SECTION */
-main {
-    width: 100%;
-    box-sizing: border-box; /* ป้องกัน padding ทำให้ล้น */
-    max-width: 1400px;
-    margin: auto;
     padding: 20px;
 }
 
-section {
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 20px;
-    backdrop-filter: blur(15px);
-    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5);
-    padding: 40px 30px;
-    margin-bottom: 60px;
-    transition: transform 0.3s;
-}
-
-section:hover {
-    transform: scale(1.01);
+.container {
+    max-width: 800px;
+    margin: auto;
 }
 
 h1 {
-    font-size: 2.5rem;
-    color: #fff;
-    margin-bottom: 30px;
     text-align: center;
-    letter-spacing: 2px;
-    border-bottom: 1px solid rgba(255,255,255,0.2);
-    padding-bottom: 10px;
+    font-size: 2.5em;
+    margin-bottom: 20px;
+    color: #FFD700; /* สีทองเพื่อความหรูหรา */
+    text-transform: uppercase; /* เปลี่ยนข้อความให้เป็นตัวพิมพ์ใหญ่ */
 }
 
-/* CONTAINERS */
-.artist-container,
-.producer-container {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 30px;
-    justify-content: center;
-}
-
-/* ARTIST CARD */
 .artist-card {
-    background: linear-gradient(145deg, #1e1e1e, #292929);
-    border-radius: 16px;
-    overflow: hidden;
-    text-decoration: none;
-    color: #fff;
+    background: #2b2b2b; /* สีพื้นหลังของการ์ด */
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5); /* เงาที่ให้ความลึก */
+    margin: 15px 0;
+    padding: 20px;
     text-align: center;
-    padding: 24px;
-    transition: transform 0.3s, box-shadow 0.3s;
-    box-shadow: 0 10px 20px rgba(0,0,0,0.4);
-    border: 1px solid rgba(255,255,255,0.05);
+    transition: transform 0.3s; /* การเปลี่ยนแปลงเมื่อโฮเวอร์ */
 }
 
 .artist-card:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.6);
+    transform: scale(1.05); /* ขยายการ์ดเมื่อโฮเวอร์ */
 }
 
 .artist-card img {
     width: 100%;
-    height: auto;
-    border-radius: 50%;
-    border: 4px solid rgba(255, 255, 255, 0.2);
-    margin-bottom: 16px;
-    transition: transform 0.3s;
-}
-
-.artist-card:hover img {
-    transform: scale(1.05);
-}
-
-.artist-name {
-    font-size: 1.3rem;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    color: #ffd700;
-}
-
-/* BUTTON STYLE */
-.add-artist-btn {
-    margin: 40px auto 0;
-    display: block;
-    padding: 14px 36px;
-    font-size: 1rem;
-    background: linear-gradient(to right, #FFD700, #FFA500);
-    color: #000;
-    font-weight: bold;
-    border: none;
+    max-width: 300px; /* กำหนดขนาดสูงสุดของรูปภาพ */
     border-radius: 8px;
-    cursor: pointer;
-    box-shadow: 0 4px 15px rgba(255, 215, 0, 0.4);
-    transition: all 0.3s ease;
+    border: 2px solid #FFD700; /* ขอบทอง */
+    margin: 0 auto; /* จัดให้อยู่กึ่งกลาง */
 }
 
-.add-artist-btn:hover {
-    transform: scale(1.05);
-    box-shadow: 0 6px 20px rgba(255, 215, 0, 0.5);
+
+h2 {
+    font-size: 1.8em;
+    margin: 10px 0;
+    color: #FFD700; /* สีทอง */
 }
 
-/* FOOTER */
-footer {
-    width: 100%;
-    text-align: center;
-    color: #999;
-    font-size: 0.9rem;
+p {
+    font-size: 1.2em;
+    color: #cccccc; /* สีเทาอ่อน */
+}
+
+/* ปรับแต่งลิงก์ให้สวยงาม */
+a {
+    color: #FFD700;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+a:hover {
+    text-decoration: underline; /* เพิ่มเส้นใต้เมื่อโฮเวอร์ */
+}
+.contact-info {
+    background: #2b2b2b; /* สีพื้นหลังเข้ม */
+    border-radius: 8px;
     padding: 20px;
-    border-top: 1px solid rgba(255,255,255,0.1);
-    background: #121212;
-}
-
-/* ANIMATIONS */
-@keyframes fadeInDown {
-    from {
-        opacity: 0;
-        transform: translateY(-30px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-/* RESPONSIVE */
-@media screen and (max-width: 768px) {
-    h1 {
-        font-size: 2rem;
-    }
-
-    .artist-card {
-        padding: 16px;
-    }
-
-    .label {
-        font-size: 1.8rem;
-    }
-
-    .artist-container,
-    .producer-container {
-        grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-    }
-}
-
-.social-links {
     margin-top: 20px;
-    display: flex;
-    justify-content: center;
-    gap: 20px;
 }
 
-.social-links a {
-    color: #fff;
-    font-size: 1.8rem;
-    transition: color 0.3s, transform 0.3s;
+.contact-info h2 {
+    color: #FFD700; /* สีทอง */
+    font-size: 1.8em;
+    margin-bottom: 15px;
+    text-align: center;
 }
 
-.social-links a:hover {
-    color: #FFD700; /* สีทองตอน hover */
-    transform: scale(1.2);
+.contact-info p {
+    color: #cccccc; /* สีเทาอ่อน */
+    font-size: 1.2em;
+    margin: 10px 0;
+    text-align: center; /* จัดให้อยู่กลาง */
 }
 
-/* ===== VIDEO BACKGROUND ===== */
-.video-background {
-    position: fixed;
-    top: 0;
-    left: 0;
-    height: 100vh;
-    width: 100vw;
+.contact-info a {
+    font-family: "Noto Sans Thai", sans-serif;
+    color: #FFD700; /* สีทอง */
+    text-decoration: none; /* ไม่ให้มีเส้นใต้ */
+    font-weight: bold; /* หนา */
+}
+
+.contact-info a:hover {
+    text-decoration: underline; /* เพิ่มเส้นใต้เมื่อโฮเวอร์ */
+}
+
+footer {
+    background: #1a1a1a; /* สีพื้นหลังเข้มเหมือนเว็บไซต์ */
+    color: #cccccc; /* สีตัวอักษรเทาอ่อน */
+    text-align: center; /* จัดกลาง */
+    padding: 10px 0; /* ช่องว่างด้านบนและล่าง */
+    position: relative; /* ให้ตำแหน่งสัมพันธ์กับ container */
+    bottom: 0; /* จัดให้ไปอยู่ด้านล่าง */
+    width: 100%; /* ทำให้เต็มความกว้าง */
+    font-size: 0.9em; /* ขนาดตัวอักษรเล็กลง */
+}
+
+.footer-logo {
+    width: 80px; /* ขยายขนาดโลโก้ */
+    height: auto;
+    margin-bottom: 10px;
+    opacity: 0.9;
+    transition: opacity 0.3s ease;
+}
+
+/* ปุ่มโฮม */
+.home-button {
+    display: inline-block;
+    position: fixed; /* ทำให้ปุ่มโฮมติดกับหน้าจอ */
+    top: 20px; /* ระยะจากด้านบน */
+    left: 20px; /* ระยะจากด้านซ้าย */
+    z-index: 1000; /* ลำดับชั้นเพื่อให้อยู่ด้านบนสุด */
+    text-align: center;
+}
+
+.home-button a {
+    display: inline-flex;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: #FFD700; /* สีทอง */
+    color: #1a1a1a; /* สีตัวอักษรเข้ม */
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+.home-button a:hover {
+    background-color: #e5c100; /* สีทองเข้มขึ้นเล็กน้อยเมื่อโฮเวอร์ */
+}
+
+.home-icon {
+    width: 20px;
+    height: 20px;
+    margin-right: 8px; /* เว้นระยะห่างระหว่างไอคอนกับข้อความ */
+}
+
+.youtube-video {
+    margin-top: 15px;
+    border-radius: 8px;
+    overflow: hidden; /* ทำให้ขอบวิดีโอกลมตามมุมของการ์ด */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5); /* เพิ่มเงาให้ดูน่าสนใจ */
+}
+
+.soundcloud-preview {
+    margin-top: 15px;
+    border-radius: 8px;
     overflow: hidden;
-    z-index: -2; /* อยู่หลังทุกอย่าง */
-}
-
-.video-foreground iframe {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 120vw; /* มากกว่า 100% เผื่อจอสัดส่วนพิเศษ */
-    height: 67.5vw; /* สัดส่วน 16:9 */
-    min-width: 100vw;
-    min-height: 100vh;
-    filter: blur(10px) brightness(0.4);
-    pointer-events: none;
-}
-
-/* ชั้นคลุมสำหรับทำให้ข้อความดูเด่นขึ้น */
-.video-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    height: 100vh;
-    width: 100vw;
-    background: rgba(0, 0, 0, 0.5); /* ดำโปร่ง */
-    z-index: -1;
-}
-
-.artist-container.hovering .artist-card {
-  filter: blur(2px) brightness(0.6);
-  opacity: 0.4;
-  transition: all 0.3s ease;
-}
-
-.artist-container.hovering .artist-card.active {
-  filter: none;
-  opacity: 1;
-  z-index: 2;
-  transform: scale(1.05);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
 }
