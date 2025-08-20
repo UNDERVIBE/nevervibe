@@ -1,12 +1,12 @@
 const artists = [
-    { name: "TRAPMEEN!", image: "image/artist1.jpg", url: "artist/trapmeen.html" },
-    { name: "N4", image: "image/artist2.jpg", url: "artist/n4.html" },
-    { name: "SRY4LATE", image: "image/artist3.jpg", url: "artist/SRY4LATE.html" },
-    { name: "B$TN", image: "image/artist4.jpg", url: "artist/B$TN.html" },
-    { name: "MIN4RI", image: "image/artist5.jpg", url: "artist/min4ri.html" },
-    { name: "T4NN", image: "image/artist6.jpg", url: "artist/T4NN.html" },
-    { name: "AKITO†", image: "image/artist7.jpg", url: "artist/AKITO.html" },
-    { name: "PERX", image: "image/artist8.jpg", url: "artist/PERX.html" },
+    { name: "TRAPMEEN!", image: "image/artist1.png", url: "artist/trapmeen.html" },
+    { name: "N4", image: "image/artist2.png", url: "artist/n4.html" },
+    { name: "SRY4LATE", image: "image/artist3.png", url: "artist/SRY4LATE.html" },
+    { name: "B$TN", image: "image/artist4.png", url: "artist/B$TN.html" },
+    { name: "MIN4RI", image: "image/artist5.png", url: "artist/min4ri.html" },
+    { name: "T4NN", image: "image/artist6.png", url: "artist/T4NN.html" },
+    { name: "AKITO†", image: "image/artist7.png", url: "artist/AKITO.html" },
+    { name: "PERX", image: "image/artist8.png", url: "artist/PERX.html" },
     ///{ name: "T!WLY", image: "image/artist8.png", url: "artist/T!WLY.html" },
 ];
 
