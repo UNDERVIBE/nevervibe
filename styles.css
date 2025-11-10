@@ -124,7 +124,7 @@ h1 {
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 1px;
-    color: #ffd700;
+    color: #ffffff;
 }
 
 /* BUTTON STYLE */
@@ -205,7 +205,7 @@ footer {
 }
 
 .social-links a:hover {
-    color: #FFD700; /* สีทองตอน hover */
+    color: #ff0000; /* สีทองตอน hover */
     transform: scale(1.2);
 }
 
