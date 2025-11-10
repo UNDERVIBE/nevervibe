@@ -16,7 +16,7 @@ h1 {
     text-align: center;
     font-size: 2.5em;
     margin-bottom: 20px;
-    color: #FFD700; /* สีทองเพื่อความหรูหรา */
+    color: #ffffff; /* สีทองเพื่อความหรูหรา */
     text-transform: uppercase; /* เปลี่ยนข้อความให้เป็นตัวพิมพ์ใหญ่ */
 }
 
@@ -38,7 +38,7 @@ h1 {
     width: 100%;
     max-width: 300px; /* กำหนดขนาดสูงสุดของรูปภาพ */
     border-radius: 8px;
-    border: 2px solid #FFD700; /* ขอบทอง */
+    border: 2px solid #ff0000; /* ขอบทอง */
     margin: 0 auto; /* จัดให้อยู่กึ่งกลาง */
 }
 
@@ -46,7 +46,7 @@ h1 {
 h2 {
     font-size: 1.8em;
     margin: 10px 0;
-    color: #FFD700; /* สีทอง */
+    color: #ffffff; /* สีทอง */
 }
 
 p {
@@ -56,7 +56,7 @@ p {
 
 /* ปรับแต่งลิงก์ให้สวยงาม */
 a {
-    color: #FFD700;
+    color: #ffffff;
     text-decoration: none;
     font-weight: bold;
 }
@@ -72,7 +72,7 @@ a:hover {
 }
 
 .contact-info h2 {
-    color: #FFD700; /* สีทอง */
+    color: #ffffff; /* สีทอง */
     font-size: 1.8em;
     margin-bottom: 15px;
     text-align: center;
@@ -87,7 +87,7 @@ a:hover {
 
 .contact-info a {
     font-family: "Noto Sans Thai", sans-serif;
-    color: #FFD700; /* สีทอง */
+    color: #ff0000; /* สีทอง */
     text-decoration: none; /* ไม่ให้มีเส้นใต้ */
     font-weight: bold; /* หนา */
 }
@@ -129,7 +129,7 @@ footer {
     display: inline-flex;
     align-items: center;
     padding: 10px 20px;
-    background-color: #FFD700; /* สีทอง */
+    background-color: #ffffff; /* สีทอง */
     color: #1a1a1a; /* สีตัวอักษรเข้ม */
     text-decoration: none;
     border-radius: 8px;
@@ -138,7 +138,7 @@ footer {
 }
 
 .home-button a:hover {
-    background-color: #e5c100; /* สีทองเข้มขึ้นเล็กน้อยเมื่อโฮเวอร์ */
+    background-color: #ff0000; /* สีทองเข้มขึ้นเล็กน้อยเมื่อโฮเวอร์ */
 }
 
 .home-icon {
