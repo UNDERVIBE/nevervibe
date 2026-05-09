@@ -11,7 +11,7 @@ const artists = [
 
 // ข้อมูลสินค้า Merch
 const merchItems = [
-    { name: "NV Official TEE", price: "1,290.-", image: "image/merch1.jpg", link: "https://line.me/R/ti/p/@yourid" },
+    { name: "NV Official TEE", price: "XXX", image: "image/merch1.jpg", link: "https://line.me/R/ti/p/@yourid" },
 
 ];
 
