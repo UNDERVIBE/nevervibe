@@ -1,266 +1,248 @@
-/* ฟอนต์ใหม่ (แนะนำใช้ Inter หรือ Playfair) */
+/* --- BASE STYLES --- */
 body {
     font-family: 'Inter', 'Noto Sans Thai', sans-serif;
-    background: linear-gradient(135deg, #0f0f0f, #1a1a1a);
+    background: #0a0a0a;
     color: #e0e0e0;
     margin: 0;
     padding: 0;
     scroll-behavior: smooth;
     overflow-x: hidden;
 }
-html {
-    max-width: 100%;
-    overflow-x: hidden;
-}
-/* HEADER */
-header {
-    text-align: center;
-    padding: 30px 20px;
-    background: transparent;
-    animation: fadeInDown 1s ease-out;
-}
+html { max-width: 100%; overflow-x: hidden; }
 
-.logo {
-    width: 120px;
-    filter: drop-shadow(0 4px 10px rgba(255, 255, 255, 0.2));
-}
-
-.label {
-    font-size: 2.2rem;
-    color: #f5f5f5;
-    letter-spacing: 4px;
-    font-weight: 700;
-    text-shadow: 0 2px 10px rgba(255, 255, 255, 0.2);
-}
-
-/* MAIN & SECTION */
-main {
-    width: 100%;
-    box-sizing: border-box; /* ป้องกัน padding ทำให้ล้น */
-    max-width: 1400px;
-    margin: auto;
-    padding: 20px;
-}
-
-section {
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 20px;
+/* NAVIGATION (ปรับให้เลื่อนซ้ายขวาได้บนมือถือ) */
+.main-nav {
+    position: fixed;
+    top: 0; width: 100%;
+    background: rgba(0,0,0,0.95);
     backdrop-filter: blur(15px);
-    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5);
-    padding: 40px 30px;
-    margin-bottom: 60px;
-    transition: transform 0.3s;
-}
-
-section:hover {
-    transform: scale(1.01);
-}
-
-h1 {
-    font-size: 2.5rem;
-    color: #fff;
-    margin-bottom: 30px;
-    text-align: center;
-    letter-spacing: 2px;
-    border-bottom: 1px solid rgba(255,255,255,0.2);
-    padding-bottom: 10px;
-}
-
-/* CONTAINERS */
-.artist-container,
-.producer-container {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 30px;
-    justify-content: center;
-}
-
-/* ARTIST CARD */
-.artist-card {
-    background: linear-gradient(145deg, #1e1e1e, #292929);
-    border-radius: 16px;
-    overflow: hidden;
-    text-decoration: none;
-    color: #fff;
-    text-align: center;
-    padding: 24px;
-    transition: transform 0.3s, box-shadow 0.3s;
-    box-shadow: 0 10px 20px rgba(0,0,0,0.4);
-    border: 1px solid rgba(255,255,255,0.05);
-}
-
-.artist-card:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.6);
-}
-
-.artist-card img {
-    width: 100%;
-    height: auto;
-    border-radius: 50%;
-    border: 4px solid rgba(255, 255, 255, 0.2);
-    margin-bottom: 16px;
-    transition: transform 0.3s;
-}
-@media screen and (max-width: 768px) {
-  .artist-card img {
-    display: none;
-  }
-
-  .artist-card[data-tapped="true"] img {
-    display: block;
-    margin-top: 15px;
-  }
-}
-
-
-.artist-card:hover img {
-    transform: scale(1.05);
-}
-
-.artist-name {
-    font-size: 1.3rem;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    color: #ffffff;
-}
-
-/* BUTTON STYLE */
-.add-artist-btn {
-    margin: 40px auto 0;
-    display: block;
-    padding: 14px 36px;
-    font-size: 1rem;
-    background: linear-gradient(to right, #FFD700, #FFA500);
-    color: #000;
-    font-weight: bold;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    box-shadow: 0 4px 15px rgba(255, 215, 0, 0.4);
-    transition: all 0.3s ease;
-}
-
-.add-artist-btn:hover {
-    transform: scale(1.05);
-    box-shadow: 0 6px 20px rgba(255, 215, 0, 0.5);
-}
-
-/* FOOTER */
-footer {
-    width: 100%;
-    text-align: center;
-    color: #999;
-    font-size: 0.9rem;
-    padding: 20px;
-    border-top: 1px solid rgba(255,255,255,0.1);
-    background: #121212;
-}
-
-/* ANIMATIONS */
-@keyframes fadeInDown {
-    from {
-        opacity: 0;
-        transform: translateY(-30px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-/* RESPONSIVE */
-@media screen and (max-width: 768px) {
-    h1 {
-        font-size: 2rem;
-    }
-
-    .artist-card {
-        padding: 16px;
-    }
-
-    .label {
-        font-size: 1.8rem;
-    }
-
-    .artist-container,
-    .producer-container {
-        grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-    }
-}
-
-.social-links {
-    margin-top: 20px;
+    z-index: 1000;
     display: flex;
     justify-content: center;
     gap: 20px;
+    padding: 15px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
 }
+.main-nav a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    transition: color 0.3s;
+    white-space: nowrap; /* กันเมนูตัดบรรทัด */
+}
+.main-nav a:hover { color: #FFD700; }
+.nav-booking { color: #FFD700 !important; border: 1px solid #FFD700; padding: 2px 10px; border-radius: 4px;}
 
-.social-links a {
+/* HEADER */
+header { text-align: center; padding: 120px 20px 40px; }
+.logo { width: 110px; filter: drop-shadow(0 0 15px rgba(255,255,255,0.2)); }
+.label { font-size: 2.8rem; letter-spacing: 6px; margin: 15px 0; font-weight: 900; color: #fff;}
+.update-date { font-size: 0.8rem; color: #888; letter-spacing: 2px; }
+
+/* SOCIAL LINKS TOP */
+.social-links-top {
+    display: flex;
+    justify-content: center;
+    gap: 25px;
+    margin-bottom: 40px;
+}
+.social-links-top a {
     color: #fff;
     font-size: 1.8rem;
-    transition: color 0.3s, transform 0.3s;
+    transition: transform 0.3s, color 0.3s;
+}
+.social-links-top a:hover { color: #FFD700; transform: scale(1.1); }
+
+/* MAIN CONTAINER */
+main { max-width: 1200px; margin: auto; padding: 0 20px; }
+
+section {
+    padding: 100px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
 }
 
-.social-links a:hover {
-    color: #ff0000; /* สีทองตอน hover */
-    transform: scale(1.2);
+h1 { 
+    font-size: 3.5rem; 
+    text-align: center; 
+    margin-bottom: 60px; 
+    text-transform: uppercase; 
+    letter-spacing: 5px; 
+    color: #fff;
+    font-weight: 900;
 }
 
-/* ===== VIDEO BACKGROUND ===== */
-.video-background {
-    position: fixed;
-    top: 0;
-    left: 0;
-    height: 100vh;
-    width: 100vw;
+/* ARTISTS (Poster Style) */
+.artist-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 30px;
+}
+.artist-card {
+    position: relative;
+    aspect-ratio: 3/4;
     overflow: hidden;
-    z-index: -2; /* อยู่หลังทุกอย่าง */
+    border-radius: 12px;
+    background: #111;
+    text-decoration: none;
+    border: 1px solid rgba(255,255,255,0.05);
 }
-
-.video-foreground iframe {
+.artist-card img { width: 100%; height: 100%; object-fit: cover; transition: 0.6s ease; }
+.artist-card:hover img { transform: scale(1.1); }
+.artist-name {
     position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 120vw; /* มากกว่า 100% เผื่อจอสัดส่วนพิเศษ */
-    height: 67.5vw; /* สัดส่วน 16:9 */
-    min-width: 100vw;
-    min-height: 100vh;
-    filter: blur(10px) brightness(0.4);
-    pointer-events: none;
-}
-
-/* ชั้นคลุมสำหรับทำให้ข้อความดูเด่นขึ้น */
-.video-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    height: 100vh;
-    width: 100vw;
-    background: rgba(0, 0, 0, 0.5); /* ดำโปร่ง */
-    z-index: -1;
-}
-
-.artist-container.hovering .artist-card {
-  filter: blur(2px) brightness(0.6);
-  opacity: 0.4;
-  transition: all 0.3s ease;
-}
-
-.artist-container.hovering .artist-card.active {
-  filter: none;
-  opacity: 1;
-  z-index: 2;
-  transform: scale(1.05);
-}
-.update-date {
-    font-size: 0.95rem;
-    color: #ccc;
-    margin-top: 8px;
+    bottom: 0; width: 100%;
+    padding: 50px 20px 25px;
+    background: linear-gradient(transparent, rgba(0,0,0,0.95));
+    color: #fff; font-size: 1.8rem; font-weight: 900; text-align: center;
     letter-spacing: 1px;
-    text-shadow: 0 1px 2px rgba(0,0,0,0.4);
-    animation: fadeInUp 1s ease;
 }
+
+/* EVENTS */
+.event-container { display: flex; flex-direction: column; gap: 20px; }
+.event-item { 
+    display: flex; align-items: center; gap: 30px; 
+    background: rgba(255,255,255,0.03); 
+    padding: 25px 35px; border-radius: 15px;
+    border: 1px solid rgba(255,255,255,0.05);
+}
+.event-poster img { width: 90px; height: 125px; object-fit: cover; border-radius: 8px; box-shadow: 0 5px 15px rgba(0,0,0,0.5); }
+.event-date { width: 150px; flex-shrink: 0; color: #FFD700; font-weight: 800; font-size: 1.1rem; }
+.event-detail { flex-grow: 1; }
+.event-detail h3 { margin: 0 0 5px; font-size: 1.6rem; color: #fff; }
+.event-detail p { margin: 0; color: #aaa; }
+.event-artists { margin-top: 10px !important; color: #eee !important; font-weight: 600; }
+.ticket-btn { 
+    background: #fff; color: #000; padding: 12px 25px; 
+    text-decoration: none; font-weight: 900; border-radius: 8px;
+    transition: 0.3s;
+}
+.ticket-btn:hover { background: #FFD700; }
+
+/* VIDEO GRID (IG Reels Style) */
+/* VIDEO GRID (ปรับกรอบเป็นแนวนอน 16:9) */
+.video-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); /* ขยายขนาดขั้นต่ำให้เหมาะกับแนวนอน */
+    gap: 30px;
+}
+.video-item { 
+    background: #111; 
+    padding: 15px; 
+    border-radius: 15px; 
+    border: 1px solid rgba(255,255,255,0.05); 
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: transform 0.3s ease;
+}
+.video-item:hover {
+    transform: translateY(-5px);
+    border-color: rgba(255,255,255,0.3);
+}
+.video-item iframe { 
+    width: 100%; 
+    aspect-ratio: 16/9; /* ปรับสัดส่วนกลับเป็นแนวนอน */
+    border-radius: 10px; 
+    border: none; 
+    background: #000;
+}
+.video-item h3 { 
+    margin: 15px 0 0 0; 
+    font-size: 1.1rem; 
+    text-align: center; 
+    color: #fff; 
+    font-weight: 600; 
+    width: 100%;
+}
+/* RELEASES */
+.release-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; }
+.release-card { 
+    background: #111; border-radius: 15px; overflow: hidden; 
+    text-decoration: none; border: 1px solid rgba(255,255,255,0.05);
+}
+.release-card img { width: 100%; aspect-ratio: 1/1; object-fit: cover; }
+.release-info { padding: 20px; text-align: center; color: #fff; }
+.release-info h3 { margin: 0 0 5px; font-size: 1.3rem; }
+.release-info p { margin: 0; color: #888; }
+
+/* MERCH */
+.merch-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; }
+.merch-card { background: #111; padding: 20px; border-radius: 15px; text-align: center; border: 1px solid rgba(255,255,255,0.05); }
+.merch-img img { width: 100%; border-radius: 10px; margin-bottom: 15px; }
+.merch-info h3 { font-size: 1.2rem; margin-bottom: 5px; color: #fff; }
+.merch-info p { color: #FFD700; font-weight: 800; margin-bottom: 20px; }
+.buy-btn { display: block; background: #fff; color: #000; padding: 12px; text-decoration: none; font-weight: 900; border-radius: 8px; }
+
+/* BOOKING FORM */
+.booking-container { max-width: 700px; margin: auto; background: #111; padding: 40px; border-radius: 20px; border: 1px solid rgba(255,255,255,0.05); }
+.booking-form .form-group { display: flex; gap: 20px; margin-bottom: 20px; }
+.booking-form input, .booking-form select, .booking-form textarea {
+    flex: 1; background: #000; border: 1px solid #333; color: #fff; padding: 15px; border-radius: 8px; font-family: inherit;
+}
+.submit-btn { width: 100%; padding: 18px; background: #FFD700; color: #000; border: none; font-weight: 900; border-radius: 8px; cursor: pointer; }
+
+/* ABOUT */
+.about-content { max-width: 800px; margin: auto; text-align: center; line-height: 1.8; font-size: 1.1rem; color: #ccc; }
+
+/* FOOTER */
+footer { text-align: center; padding: 80px 20px; border-top: 1px solid rgba(255,255,255,0.05); background: #050505; }
+
+/* VIDEO BACKGROUND */
+.video-background { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -2; }
+.video-foreground iframe {
+    position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+    width: 120vw; height: 68vw; filter: blur(25px) brightness(0.25); pointer-events: none;
+}
+.video-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.4); z-index: -1; }
+
+/* --- 🔥 RESPONSIVE (FOR MOBILE) 🔥 --- */
+@media (max-width: 768px) {
+    /* Nav: ทำให้เลื่อนซ้ายขวาได้ */
+    .main-nav { 
+        justify-content: flex-start; 
+        padding: 15px 20px; 
+        overflow-x: auto; 
+        scrollbar-width: none; /* ซ่อน scrollbar ใน Firefox */
+    }
+    .main-nav::-webkit-scrollbar { display: none; } /* ซ่อน scrollbar ใน Chrome */
+
+    header { padding: 100px 20px 30px; }
+    .label { font-size: 2rem; letter-spacing: 3px; }
+    h1 { font-size: 2.2rem; margin-bottom: 40px; }
+
+    main { padding: 0 15px; }
+    section { padding: 60px 0; }
+
+    /* Artists: แสดง 2 คอลัมน์เพื่อให้เห็นภาพชัด */
+    .artist-container { grid-template-columns: repeat(2, 1fr); gap: 15px; }
+    .artist-name { font-size: 1.1rem; padding: 30px 10px 15px; }
+
+    /* Events: สแต็คเป็นแนวตั้ง */
+    .event-item { 
+        flex-direction: column; 
+        text-align: center; 
+        padding: 30px 20px;
+        gap: 15px;
+    }
+    .event-poster img { width: 120px; height: 170px; }
+    .event-date { width: 100%; }
+    .event-detail h3 { font-size: 1.4rem; }
+    .event-action { width: 100%; }
+    .ticket-btn { display: block; text-align: center; }
+
+    /* Videos & Merch: 1 คอลัมน์เต็มตา */
+    .video-grid, .merch-container, .release-container { 
+        grid-template-columns: 1fr; 
+        gap: 20px;
+    }
+
+    /* Booking Form: อินพุตซ้อนกัน */
+    .booking-container { padding: 25px 20px; }
+    .booking-form .form-group { flex-direction: column; gap: 15px; }
+    
+    .about-content { font-size: 1rem; }
+}
+
+@keyframes fadeInDown { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }

@@ -11,58 +11,118 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@100..900&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-
 </head>
 <body>
+    <nav class="main-nav">
+        <a href="#artists">ARTISTS</a>
+        <a href="#events">EVENTS</a>
+        <a href="#releases">RELEASES</a>
+        <a href="#videos">VIDEOS</a>
+        <a href="#merch">MERCH</a>
+        <a href="#about">ABOUT</a>
+        <a href="#booking" class="nav-booking">BOOKING</a>
+    </nav>
+
     <header>
         <img src="image/logo2.png" alt="Logo" class="logo">
         <h2 class="label">NEVERV!BE</h2>
-        <p class="update-date">อัพเดทเมื่อวันที่ 11/11/2025</p>
+        <p class="update-date">LAST UPDATE: MAY 2026</p>
     </header>
-<div class="social-links">
-  <a href="https://www.youtube.com/@NEVERVIBE2025/featured" target="_blank" aria-label="YouTube">
-    <i class="fab fa-youtube"></i>
-  </a>
-  <a href="https://www.instagram.com/nevervibe.th/" target="_blank" aria-label="Instagram">
-    <i class="fab fa-instagram"></i>
-  </a>
-</div>
+    
+    <div class="social-links-top">
+        <a href="https://www.youtube.com/@NEVERVIBE2025/featured" target="_blank"><i class="fab fa-youtube"></i></a>
+        <a href="https://www.instagram.com/nevervibe.th/" target="_blank"><i class="fab fa-instagram"></i></a>
+    </div>
 
     <main>
-        <section>
+        <section id="artists">
             <h1>Artists</h1>
             <div class="artist-container" id="artistContainer"></div>
         </section>
 
-        <section>
-            <h1>NV Showbiz / Contact : nevervibe.th</h1>
-            <div class="producer-container" id="producerContainer"></div>
+        <section id="events">
+            <h1>Upcoming Events</h1>
+            <div class="event-container" id="eventContainer"></div>
+        </section>
+
+        <section id="videos">
+            <h1>Official Videos</h1>
+            <div class="video-grid" id="videoContainer"></div>
+        </section>
+
+        <section id="releases">
+            <h1>Latest Releases</h1>
+            <div class="release-container" id="releaseContainer"></div>
+        </section>
+
+        <section id="merch">
+            <h1>NV Merch Store</h1>
+            <div class="merch-container" id="merchContainer"></div>
+        </section>
+
+        <section id="about" class="about-section">
+            <section id="about" class="about-section">
+            <h1>Our Culture</h1>
+            <div class="about-content">
+                <p class="highlight-text">"NV เด็กใต้ดิน?"</p>
+                
+                <p>ทุกอย่างเริ่มต้นจากแพสชันของเพจ <strong>UNDERGROUND CULTURE TH</strong> ที่คลุกคลีอยู่กับฮิปฮอปใต้ดินมาอย่างยาวนาน เราได้เห็นเพชรเม็ดงามซ่อนตัวอยู่มากมาย แร็ปเปอร์หลายคนมีสไตล์ที่ชัดเจน สกิลเยอะมากๆ แต่กลับยังไม่มีพื้นที่หรือสปอตไลต์ที่ส่องไปถึงพวกเขามากพอ เราจึงตัดสินใจรวบรวมตัวตึงเหล่านั้นมารวมกัน และก่อตั้งโปรเจกต์นี้ขึ้น</p>
+                
+                <p>ภายใต้ชื่อ <strong>"NEVERV!BE"</strong> ซึ่งซ่อนความหมายที่โคตรเดือดเอาไว้ว่า <em>"Never Compromise Your Vibe"</em> มันคือคลื่นพลังงานดนตรีที่ไม่มีวันดับ และเป็นบรรยากาศที่โคตรจะเร้าใจ ในแบบที่คุณไม่เคยสัมผัสจากวงการบนดิน เราจะไม่ยอมลดทอนความเป็นตัวเองเพื่อตามกระแสใคร</p>
+                
+                <p>เป้าหมายของ NEVERV!BE มีเพียงหนึ่งเดียว: <strong>ผลักดันแร็ปเปอร์ใต้ดินให้กลายเป็นดาว</strong> เราจะรีดความสามารถของทุกคน ทำให้มีชื่อเสียง เงิน และเป็นงานที่หล่อเลี้ยงชีวิตพวกเขาได้อย่างภาคภูมิใจ</p>
+                
+                <p class="welcome-text">WELCOME TO THE NEW ERA. WELCOME TO NEVERV!BE.</p>
+            </div>
+        </section>
+        </section>
+
+        <section id="booking">
+            <h1>Artist Booking</h1>
+            <div class="booking-container">
+                <p class="booking-desc">ติดต่องานจ้างงานโชว์ หรืองาน Event ต่างๆ</p>
+                <form id="bookingForm" class="booking-form">
+                    <div class="form-group">
+                        <input type="text" placeholder="ชื่อผู้ติดต่อ / ชื่องาน" required>
+                        <input type="email" placeholder="อีเมลสำหรับติดต่อกลับ" required>
+                    </div>
+                    <div class="form-group">
+                        <select required>
+                            <option value="" disabled selected>เลือกศิลปินที่สนใจ</option>
+                            <option value="TRAPMEEN!">TRAPMEEN!</option>
+                            <option value="N4">N4</option>
+                            <option value="B$TN">B$TN</option>
+                            <option value="AKITO†">AKITO†</option>
+                            <option value="ALL">เหมาค่าย (All Artists)</option>
+                        </select>
+                        <input type="date" required>
+                    </div>
+                    <textarea placeholder="รายละเอียดงาน (สถานที่, เวลา, งบประมาณ)" rows="4" required></textarea>
+                    <button type="submit" class="submit-btn">SEND REQUEST</button>
+                </form>
+            </div>
         </section>
     </main>
-<div class="video-background">
-  <div class="video-foreground">
-    <iframe
-      src="https://www.youtube.com/embed/-kWiWynPOeY?autoplay=1&mute=1&controls=0&loop=1&playlist=-kWiWynPOeY&modestbranding=1&showinfo=0"
-      frameborder="0"
-      allow="autoplay; encrypted-media"
-      allowfullscreen
-    ></iframe>
-  </div>
-</div>
+
+    <div class="video-background">
+        <div class="video-foreground">
+            <iframe
+                src="https://www.youtube.com/embed/-kWiWynPOeY?autoplay=1&mute=1&controls=0&loop=1&playlist=-kWiWynPOeY&modestbranding=1&showinfo=0"
+                frameborder="0"
+                allow="autoplay; encrypted-media"
+            ></iframe>
+        </div>
+    </div>
+    <div class="video-overlay"></div>
+
     <footer>
-        NEVERV!BE ©2025 Co.,Ltd
-        <p>FOUNDER OF UNDERGROUND CULTURE TH</p>
-        <p>CONTACT | nevervibeofficial2025@gmail.com</p>
-                  <div class="social-links">
-        <a href="https://www.youtube.com/@NEVERVIBE2025/featured" target="_blank" aria-label="YouTube">
-            <i class="fab fa-youtube"></i>
-        </a>
-        <a href="https://www.instagram.com/nevervibe.th/" target="_blank" aria-label="Instagram">
-            <i class="fab fa-instagram"></i>
-        </a>
+        <p>NEVERV!BE ©2026 Co.,Ltd | UNDERGROUND CULTURE TH</p>
+        <p>CONTACT: nevervibeofficial2025@gmail.com</p>
+        <div class="social-links-top">
+        <a href="https://www.youtube.com/@NEVERVIBE2025/featured" target="_blank"><i class="fab fa-youtube"></i></a>
+        <a href="https://www.instagram.com/nevervibe.th/" target="_blank"><i class="fab fa-instagram"></i></a>
     </div>
     </footer>
-
 
     <script src="script.js"></script>
 </body>
