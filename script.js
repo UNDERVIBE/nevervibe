@@ -16,7 +16,7 @@ const firebaseConfig = {
     messagingSenderId: "535721157547",
     appId: "1:535721157547:web:0dff6dbfd63ffff407a8ee",
     measurementId: "G-L4MMSBSMX5",
-    databaseURL: "https://nevervibe-5e049-default-rtdb.asia-southeast1.firebasedatabase.app" // Realtime Database URL
+    databaseURL: "https://nevervibe-5e049-default-rtdb.asia-southeast1.firebasedatabase.app"
 };
 
 const IMGBB_API_KEY = "1a163cec2c80a29352d2ae9d9694a589";
@@ -26,30 +26,29 @@ const ADMIN_PASSCODE = "nv2026";
 const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
 
-// Local State Store (Auto fallback if DB is empty or offline)
-let store = {
+// Initial Fallback Data
+const initialMockData = {
     artists: [
-        { id: "1", name: "TRAPMEEN!", genre: "#TRAP #MELODIC #UNDERGROUND", image: "image/TRAPMEEN.jpg", bio: "New Wave underground สไตล์เพลงผสมผสาน Rnb, melodic Trap แบบสุดโต่ง", rates: { hook: "500 THB", verse: "700 THB", both: "1000 THB" }, streaming: { spotify: "#", apple: "#", youtube: "#" }, socials: { ig: "https://www.instagram.com/_trapmeen/", tiktok: "https://www.tiktok.com/@_trapmeen" }, embeds: { youtube: "https://www.youtube.com/embed/0EZTTJre62o", soundcloud: "https://w.soundcloud.com/player/?url=https://soundcloud.com/trapmeen/trapmeen-ftyungtarr&color=%23FFD700" } },
-        { id: "2", name: "N4", genre: "#MELODIC #R&B #UNDERGROUND", image: "image/N4.jpg", bio: "ศิลปินสาย Melodic จาก NEVERV!BE ที่ดึงอารมณ์คนฟังด้วยเนื้อหาและเสียงร้องที่เป็นเอกลักษณ์", rates: { hook: "700 THB", verse: "700 THB", both: "700 THB" }, streaming: { spotify: "#", apple: "#", youtube: "#" }, socials: { ig: "https://www.instagram.com/3nf0ur/" }, embeds: { youtube: "https://www.youtube.com/embed/HAeyvYY0rmE", soundcloud: "https://w.soundcloud.com/player/?url=https://soundcloud.com/realn4/youre-perfect-n3-prod-by-sakaayumu&color=%23FFD700" } },
-        { id: "3", name: "SRY4LATE", genre: "#ALTERNATIVE #HIPHOP #UNDERGROUND", image: "image/SRY4LATE.jpg", bio: "FEARR เน้นเเนวเพลง Rnb เป็นหลัก เนื้อหาฟังง่าย เอาใจสาว ขี้เล่น แต่ตั้งใจทุกผลงาน", rates: { hook: "400 THB", verse: "400 THB", both: "700 THB" }, streaming: { spotify: "#", apple: "#", youtube: "#" }, socials: { ig: "https://www.instagram.com/sryforlatereply/" }, embeds: { youtube: "https://www.youtube.com/embed/hIXoRc0STgk" } },
-        { id: "4", name: "B$TN", genre: "#HIPHOP #TRAP #UNDERGROUND", image: "image/B$TN.jpg", bio: "แร็ปเปอร์ผู้มาพร้อมโฟลว์สุดเดือดและเนื้อหาที่เข้มข้น ดุดัน", rates: { hook: "700 THB", verse: "1,400 THB", both: "2,000 THB" }, streaming: { spotify: "#", apple: "#", youtube: "#" }, socials: { ig: "https://www.instagram.com/chuen.arom/" }, embeds: { youtube: "https://www.youtube.com/embed/DCzdwjOfl1A" } },
-        { id: "5", name: "T4NN", genre: "#TRAP #RAP #UNDERGROUND", image: "image/T4NN.jpg", bio: "ทรงพลัง ดุดัน และตรงไปตรงมา เขาคือแร็ปเปอร์ที่เปี่ยมไปด้วยสกิล Rhyme อันเฉียบคม", rates: { hook: "500 THB", verse: "700 THB", both: "1,000 THB" }, streaming: { spotify: "#", apple: "#", youtube: "#" }, socials: { ig: "https://www.instagram.com/_tannstfu/" }, embeds: { youtube: "https://www.youtube.com/embed/DibJiyysPyo" } },
-        { id: "6", name: "AKITO†", genre: "#TRAP #DRILL #UNDERGROUND", image: "image/AKITO.jpg", bio: "สัญลักษณ์ของความดุดันและมืดหม่น ศิลปินสายแข็งจาก NEVERV!BE", rates: { hook: "700 THB", verse: "700 THB", both: "1,000 THB" }, streaming: { spotify: "#", apple: "#", youtube: "#" }, socials: { ig: "https://www.instagram.com/akitogoboy/" }, embeds: { youtube: "https://www.youtube.com/embed/9aPaEKfOGhU" } },
-        { id: "7", name: "CASHTY", genre: "#TRAP #DRILL #UNDERGROUND", image: "image/CASHTY.jpg", bio: "ฉีกทุกกฎของวงการด้วยบีทหนักๆ และโฟลว์สุดเดือดที่พร้อมจะพังทุกสเตจ", rates: { hook: "-", verse: "700 THB", both: "-" }, streaming: { spotify: "#", apple: "#" }, socials: { ig: "https://www.instagram.com/ccasht/" } }
+        { id: "art1", name: "TRAPMEEN!", genre: "#TRAP #MELODIC #UNDERGROUND", image: "image/TRAPMEEN.jpg", bio: "New Wave underground สไตล์เพลงผสมผสาน Rnb, melodic Trap แบบสุดโต่ง เนื้อเพลงมีความลึกซึ้ง เข้าถึงอารมณ์", rates: { hook: "500 THB", verse: "700 THB", both: "1000 THB" }, streaming: { spotify: "https://open.spotify.com/artist/2g2JfhhP7pKGMkW3rHARfd", apple: "https://music.apple.com/us/artist/trapmeen/1792734768", youtube: "https://www.youtube.com/@Trapmeen999" }, socials: { ig: "https://www.instagram.com/_trapmeen/", tiktok: "https://www.tiktok.com/@_trapmeen" }, embeds: { youtube: "https://www.youtube.com/embed/0EZTTJre62o" } },
+        { id: "art2", name: "N4", genre: "#MELODIC #R&B #UNDERGROUND", image: "image/N4.jpg", bio: "ศิลปินสาย Melodic จาก NEVERV!BE ที่ดึงอารมณ์คนฟังด้วยเนื้อหาและเสียงร้องที่เป็นเอกลักษณ์", rates: { hook: "700 THB", verse: "700 THB", both: "700 THB" }, streaming: { spotify: "https://open.spotify.com/artist/4b1MqdWW3oG59WdBjchRRq", apple: "https://music.apple.com/us/artist/n4/1656412674", youtube: "https://www.youtube.com/@realN4" }, socials: { ig: "https://www.instagram.com/3nf0ur/" }, embeds: { youtube: "https://www.youtube.com/embed/HAeyvYY0rmE" } },
+        { id: "art3", name: "SRY4LATE", genre: "#ALTERNATIVE #HIPHOP #UNDERGROUND", image: "image/SRY4LATE.jpg", bio: "FEARR เน้นเเนวเพลง Rnb เป็นหลัก เนื้อหาฟังง่าย เอาใจสาว ขี้เล่น แต่ตั้งใจทุกผลงาน", rates: { hook: "400 THB", verse: "400 THB", both: "700 THB" }, streaming: { spotify: "https://open.spotify.com/artist/20IgO53Mogf5oJBvV60WdB", apple: "https://music.apple.com/us/artist/sry4late/1803389403", youtube: "https://www.youtube.com/@ReallyFEAR" }, socials: { ig: "https://www.instagram.com/sryforlatereply/" }, embeds: { youtube: "https://www.youtube.com/embed/hIXoRc0STgk" } },
+        { id: "art4", name: "B$TN", genre: "#HIPHOP #TRAP #UNDERGROUND", image: "image/B$TN.jpg", bio: "แร็ปเปอร์ผู้มาพร้อมโฟลว์สุดเดือดและเนื้อหาที่เข้มข้น ดุดัน หนึ่งในแกนนำความเดือดจาก NEVERV!BE", rates: { hook: "700 THB", verse: "1,400 THB", both: "2,000 THB" }, streaming: { spotify: "https://open.spotify.com/artist/40xlgc3WbxMn3740qpxWwr", apple: "https://music.apple.com/us/artist/b%24tn/1797964381", youtube: "https://www.youtube.com/@bstn223" }, socials: { ig: "https://www.instagram.com/chuen.arom/" }, embeds: { youtube: "https://www.youtube.com/embed/DCzdwjOfl1A" } },
+        { id: "art5", name: "T4NN", genre: "#TRAP #RAP #UNDERGROUND", image: "image/T4NN.jpg", bio: "ทรงพลัง ดุดัน และตรงไปตรงมา เขาคือแร็ปเปอร์ที่เปี่ยมไปด้วยสกิล Rhyme อันเฉียบคม", rates: { hook: "500 THB", verse: "700 THB", both: "1,000 THB" }, streaming: { spotify: "https://open.spotify.com/artist/0gIFDvCovFx0Ai2VMsOABh", apple: "https://music.apple.com/us/artist/t4nn/1793896012", youtube: "https://www.youtube.com/@Yungtann444" }, socials: { ig: "https://www.instagram.com/_tannstfu/" }, embeds: { youtube: "https://www.youtube.com/embed/DibJiyysPyo" } },
+        { id: "art6", name: "AKITO†", genre: "#TRAP #DRILL #UNDERGROUND", image: "image/AKITO.jpg", bio: "สัญลักษณ์ของความดุดันและมืดหม่น ศิลปินสายแข็งจาก NEVERV!BE ที่ฉีกทุกกฎของวงการ", rates: { hook: "700 THB", verse: "700 THB", both: "1,000 THB" }, streaming: { spotify: "https://open.spotify.com/artist/3PwkpdK9tYv3R54A1a7k4M", apple: "https://music.apple.com/us/album/you-know-feat-jayq-single/1883758673", youtube: "https://www.youtube.com/@akitogoboytrap" }, socials: { ig: "https://www.instagram.com/akitogoboy/" }, embeds: { youtube: "https://www.youtube.com/embed/9aPaEKfOGhU" } }
     ],
     events: [
-        { id: "1", title: "Source.wav vol3", date: "24 พฤษภาคม 2026, 19:00", location: "Redhotmoon Livehouse", artists: "Line up: AKITO, TRAPMEEN!, N4, T4NN", poster: "image/event1.jpg", status: "Get Tickets", url: "https://www.ticketmelon.com/th/sourcewavteam/Sourcewavvol3" }
+        { id: "ev1", title: "Source.wav vol3", date: "24 พฤษภาคม 2026, 19:00", location: "Redhotmoon Livehouse", artists: "Line up: AKITO, TRAPMEEN!, N4, T4NN", poster: "image/event1.jpg", status: "Get Tickets", url: "https://www.ticketmelon.com/th/sourcewavteam/Sourcewavvol3" }
     ],
     releases: [
-        { id: "1", title: "ตอนสุดท้าย", artist: "N4", cover: "image/cover2.png", url: "https://www.youtube.com/watch?v=HAeyvYY0rmE" },
-        { id: "2", title: "Collëge", artist: "B$TN", cover: "image/cover3.png", url: "https://www.youtube.com/watch?v=DCzdwjOfl1A" }
+        { id: "rel1", title: "ตอนสุดท้าย", artist: "N4", cover: "image/cover2.png", url: "https://www.youtube.com/watch?v=HAeyvYY0rmE" },
+        { id: "rel2", title: "Collëge", artist: "B$TN", cover: "image/cover3.png", url: "https://www.youtube.com/watch?v=DCzdwjOfl1A" }
     ],
     videos: [
-        { id: "1", title: "Melt Livehouse 🔥🎤", type: "ig", val: "DXO-21LkZmw" },
-        { id: "2", title: "NV NV NV 👁️", type: "ig", val: "DWJQwSlCgY9" }
+        { id: "vid1", title: "Melt Livehouse 🔥🎤", type: "ig", val: "DXO-21LkZmw" },
+        { id: "vid2", title: "NV NV NV 👁️", type: "ig", val: "DWJQwSlCgY9" }
     ],
     merch: [
-        { id: "1", name: "NV Official TEE", price: "790 THB", image: "image/merch1.jpg", link: "https://line.me/R/ti/p/@yourid" }
+        { id: "mch1", name: "NV Official TEE", price: "790 THB", image: "image/merch1.jpg", link: "https://line.me/R/ti/p/@yourid" }
     ],
     about: {
         highlight: '"NV เด็กใต้ดิน?"',
@@ -58,7 +57,10 @@ let store = {
     bookings: []
 };
 
-// อัปเดตฟังก์ชัน initFirebaseSync ใน script.js
+// Global Store
+let store = JSON.parse(JSON.stringify(initialMockData));
+
+// --- 2. FIREBASE REALTIME DB SYNC WITH SEEDING ---
 function initFirebaseSync() {
     const collections = ['artists', 'events', 'releases', 'videos', 'merch', 'bookings'];
     
@@ -67,22 +69,26 @@ function initFirebaseSync() {
         onValue(dbRef, (snapshot) => {
             const data = snapshot.val();
             if (data) {
-                // แปลงข้อมูล Object จาก Firebase เป็น Array พร้อม id
                 store[colName] = Object.keys(data).map(key => ({
                     id: key,
                     ...data[key]
                 }));
             } else {
-                // ถ้าใน Firebase เป็นว่างเปล่า ให้ล้างค่าใน store
-                store[colName] = [];
+                // If cloud database is empty for this node, seed default initial data
+                if (initialMockData[colName] && initialMockData[colName].length > 0) {
+                    store[colName] = [...initialMockData[colName]];
+                    initialMockData[colName].forEach(item => {
+                        const newRef = ref(db, `${colName}/${item.id}`);
+                        set(newRef, item);
+                    });
+                } else {
+                    store[colName] = [];
+                }
             }
-            
-            // ⚠️ สำคัญมาก: สั่ง Render หน้าเว็บจริง (Public) และหน้า Admin ใหม่ทันทีที่ข้อมูลมา
             renderPublicSite();
             renderAdminPanel();
         }, (error) => {
-            console.warn(`Realtime DB path [${colName}] error:`, error);
-            // กรณีเกิด error ให้วาดหน้าจอจาก Mock Data เดิม
+            console.warn(`Realtime DB path [${colName}] using local state fallback:`, error);
             renderPublicSite();
             renderAdminPanel();
         });
@@ -92,28 +98,31 @@ function initFirebaseSync() {
         const data = snapshot.val();
         if (data) {
             store.about = data;
-            renderPublicSite();
-            renderAdminPanel();
+        } else {
+            set(ref(db, "settings/about"), initialMockData.about);
         }
+        renderPublicSite();
+        renderAdminPanel();
     });
 }
+
 // --- 3. PUBLIC SITE RENDERING ---
 function renderPublicSite() {
     // Render Artists
     const artistContainer = document.getElementById('artistContainer');
     if (artistContainer) {
-        artistContainer.innerHTML = store.artists.map(art => `
+        artistContainer.innerHTML = store.artists.length ? store.artists.map(art => `
             <div class="artist-card" onclick="openArtistProfile('${art.id}')">
                 <img src="${art.image || 'https://via.placeholder.com/300x400/111/fff?text=NV+Artist'}" alt="${art.name}">
                 <div class="artist-name">${art.name}</div>
             </div>
-        `).join('');
+        `).join('') : '<div class="loading-state">ยังไม่มีข้อมูลศิลปิน</div>';
     }
 
     // Render Events
     const eventContainer = document.getElementById('eventContainer');
     if (eventContainer) {
-        eventContainer.innerHTML = store.events.map(ev => `
+        eventContainer.innerHTML = store.events.length ? store.events.map(ev => `
             <div class="event-item">
                 <div class="event-poster"><img src="${ev.poster}"></div>
                 <div class="event-date">${ev.date}</div>
@@ -126,13 +135,13 @@ function renderPublicSite() {
                     <a href="${ev.url}" target="_blank" class="ticket-btn">${ev.status || 'Get Tickets'}</a>
                 </div>
             </div>
-        `).join('');
+        `).join('') : '<div class="loading-state">ยังไม่มีตารางงานแสดง</div>';
     }
 
     // Render Releases
     const releaseContainer = document.getElementById('releaseContainer');
     if (releaseContainer) {
-        releaseContainer.innerHTML = store.releases.map(rel => `
+        releaseContainer.innerHTML = store.releases.length ? store.releases.map(rel => `
             <a href="${rel.url}" target="_blank" class="release-card">
                 <img src="${rel.cover}">
                 <div class="release-info">
@@ -140,13 +149,13 @@ function renderPublicSite() {
                     <p>${rel.artist}</p>
                 </div>
             </a>
-        `).join('');
+        `).join('') : '<div class="loading-state">ยังไม่มีผลงานเพลง</div>';
     }
 
     // Render Videos
     const videoContainer = document.getElementById('videoContainer');
     if (videoContainer) {
-        videoContainer.innerHTML = store.videos.map(vid => `
+        videoContainer.innerHTML = store.videos.length ? store.videos.map(vid => `
             <div class="video-item">
                 ${vid.type === 'ig' ? `
                     <iframe src="https://www.instagram.com/reel/${vid.val}/embed" frameborder="0" scrolling="no" allowtransparency="true" allow="encrypted-media"></iframe>
@@ -155,13 +164,13 @@ function renderPublicSite() {
                 `}
                 <h3>${vid.title}</h3>
             </div>
-        `).join('');
+        `).join('') : '<div class="loading-state">ยังไม่มีวิดีโอ</div>';
     }
 
     // Render Merch
     const merchContainer = document.getElementById('merchContainer');
     if (merchContainer) {
-        merchContainer.innerHTML = store.merch.map(mch => `
+        merchContainer.innerHTML = store.merch.length ? store.merch.map(mch => `
             <div class="merch-card">
                 <div class="merch-img"><img src="${mch.image}"></div>
                 <div class="merch-info">
@@ -170,7 +179,7 @@ function renderPublicSite() {
                     <a href="${mch.link}" target="_blank" class="buy-btn">ORDER NOW</a>
                 </div>
             </div>
-        `).join('');
+        `).join('') : '<div class="loading-state">ยังไม่มีสินค้าในร้านค้า</div>';
     }
 
     // Render About
@@ -183,52 +192,51 @@ function renderPublicSite() {
     }
 }
 
-// --- 4. PUBLIC ARTIST PROFILE MODAL (FIXED SCROLL & CLOSE BUTTON) ---
+// --- 4. PUBLIC ARTIST PROFILE MODAL ---
 window.openArtistProfile = function(id) {
     const art = store.artists.find(a => a.id === id);
     if (!art) return;
 
     const detailHtml = `
-        <button class="modal-close-btn" onclick="closeModal('artistProfileModal')">&times;</button>
-        <div style="position: relative; height: 280px;">
-            <img src="${art.image}" style="width: 100%; height: 100%; object-fit: cover; filter: brightness(0.6);">
-            <div style="position: absolute; bottom: 20px; left: 30px; z-index: 2;">
-                <div class="genre-tags" style="color: #FFD700; font-weight: 800; font-size: 0.8rem;">${art.genre || ''}</div>
-                <h1 style="font-size: 2.8rem; margin: 0; color: #fff; text-align: left;">${art.name}</h1>
+        <div style="position: relative; height: 260px;">
+            <img src="${art.image}" style="width: 100%; height: 100%; object-fit: cover; filter: brightness(0.65);">
+            <div style="position: absolute; bottom: 20px; left: 25px; right: 25px; z-index: 2;">
+                <div class="genre-tags" style="color: #FFD700; font-weight: 800; font-size: 0.75rem; letter-spacing: 1.5px;">${art.genre || ''}</div>
+                <h1 style="font-size: 2.4rem; margin: 4px 0 0; color: #fff; text-align: left; text-shadow: 0 4px 10px rgba(0,0,0,0.8);">${art.name}</h1>
             </div>
         </div>
-        <div style="padding: 30px;">
-            <h3 style="color: #FFD700; border-bottom: 1px solid rgba(255,215,0,0.2); padding-bottom: 8px;">BIOGRAPHY</h3>
-            <p style="color: #ccc; line-height: 1.7;">${art.bio || 'ยังไม่มีข้อมูลประวัติ'}</p>
+        <div style="padding: 25px 25px 40px;">
+            <h3 style="color: #FFD700; border-bottom: 1px solid rgba(255,215,0,0.2); padding-bottom: 8px; margin-top: 0; font-size: 1.1rem;">BIOGRAPHY</h3>
+            <p style="color: #ccc; line-height: 1.7; font-size: 0.95rem;">${art.bio || 'ยังไม่มีข้อมูลประวัติ'}</p>
 
             ${art.rates ? `
-                <h3 style="color: #FFD700; border-bottom: 1px solid rgba(255,215,0,0.2); padding-bottom: 8px; margin-top: 25px;">FEATURING RATES</h3>
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 15px; margin-top: 15px;">
-                    <div style="background: #181818; padding: 15px; border-radius: 8px; text-align: center;">
-                        <span style="color: #888; font-size: 0.8rem;">HOOK</span>
-                        <div style="color: #fff; font-weight: 900; font-size: 1.2rem; margin-top: 5px;">${art.rates.hook || '-'}</div>
+                <h3 style="color: #FFD700; border-bottom: 1px solid rgba(255,215,0,0.2); padding-bottom: 8px; margin-top: 30px; font-size: 1.1rem;">FEATURING RATES</h3>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 12px; margin-top: 15px;">
+                    <div style="background: #181818; padding: 15px; border-radius: 8px; text-align: center; border: 1px solid rgba(255,255,255,0.05);">
+                        <span style="color: #888; font-size: 0.75rem; font-weight: 700;">HOOK</span>
+                        <div style="color: #fff; font-weight: 900; font-size: 1.15rem; margin-top: 4px;">${art.rates.hook || '-'}</div>
                     </div>
-                    <div style="background: #181818; padding: 15px; border-radius: 8px; text-align: center;">
-                        <span style="color: #888; font-size: 0.8rem;">VERSE</span>
-                        <div style="color: #fff; font-weight: 900; font-size: 1.2rem; margin-top: 5px;">${art.rates.verse || '-'}</div>
+                    <div style="background: #181818; padding: 15px; border-radius: 8px; text-align: center; border: 1px solid rgba(255,255,255,0.05);">
+                        <span style="color: #888; font-size: 0.75rem; font-weight: 700;">VERSE</span>
+                        <div style="color: #fff; font-weight: 900; font-size: 1.15rem; margin-top: 4px;">${art.rates.verse || '-'}</div>
                     </div>
                     <div style="background: #181818; border: 1px solid #FFD700; padding: 15px; border-radius: 8px; text-align: center;">
-                        <span style="color: #FFD700; font-size: 0.8rem;">VERSE + HOOK</span>
-                        <div style="color: #fff; font-weight: 900; font-size: 1.2rem; margin-top: 5px;">${art.rates.both || '-'}</div>
+                        <span style="color: #FFD700; font-size: 0.75rem; font-weight: 700;">VERSE + HOOK</span>
+                        <div style="color: #fff; font-weight: 900; font-size: 1.15rem; margin-top: 4px;">${art.rates.both || '-'}</div>
                     </div>
                 </div>
             ` : ''}
 
             ${art.embeds && art.embeds.youtube ? `
-                <h3 style="color: #FFD700; border-bottom: 1px solid rgba(255,215,0,0.2); padding-bottom: 8px; margin-top: 25px;">LATEST WORK</h3>
-                <div style="margin-top: 15px; border-radius: 8px; overflow: hidden;">
+                <h3 style="color: #FFD700; border-bottom: 1px solid rgba(255,215,0,0.2); padding-bottom: 8px; margin-top: 30px; font-size: 1.1rem;">LATEST WORK</h3>
+                <div style="margin-top: 15px; border-radius: 8px; overflow: hidden; background: #000;">
                     <iframe width="100%" height="240" src="${art.embeds.youtube}" frameborder="0" allowfullscreen></iframe>
                 </div>
             ` : ''}
 
-            <div style="display: flex; gap: 15px; margin-top: 30px; justify-content: center; flex-wrap: wrap;">
-                ${art.socials && art.socials.ig ? `<a href="${art.socials.ig}" target="_blank" class="btn btn-gold"><i class="fab fa-instagram icon-spacer"></i>DM AT INSTAGRAM</a>` : ''}
-                ${art.socials && art.socials.tiktok ? `<a href="${art.socials.tiktok}" target="_blank" class="btn btn-outline"><i class="fab fa-tiktok icon-spacer"></i>TIKTOK</a>` : ''}
+            <div style="display: flex; gap: 12px; margin-top: 35px; justify-content: center; flex-wrap: wrap;">
+                ${art.socials && art.socials.ig ? `<a href="${art.socials.ig}" target="_blank" class="btn btn-gold" style="padding: 12px 20px; font-size: 0.85rem;"><i class="fab fa-instagram icon-spacer"></i>DM AT INSTAGRAM</a>` : ''}
+                ${art.socials && art.socials.tiktok ? `<a href="${art.socials.tiktok}" target="_blank" class="btn btn-outline" style="padding: 12px 20px; font-size: 0.85rem;"><i class="fab fa-tiktok icon-spacer"></i>TIKTOK</a>` : ''}
             </div>
         </div>
     `;
@@ -296,11 +304,11 @@ window.logoutAdmin = function() {
     document.getElementById('adminPasscode').value = '';
 };
 
-window.switchTab = function(tabName) {
+window.switchTab = function(tabName, btnElement) {
     document.querySelectorAll('.admin-tab').forEach(b => b.classList.remove('active'));
     document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
     
-    event.currentTarget.classList.add('active');
+    if (btnElement) btnElement.classList.add('active');
     document.getElementById(`tab-${tabName}`).classList.add('active');
 };
 
@@ -358,7 +366,7 @@ function renderAdminPanel() {
             </div>
             <div class="cms-card-body">
                 <h4>${vid.title}</h4>
-                <p>Type: ${vid.type.toUpperCase()}</p>
+                <p>Type: ${vid.type ? vid.type.toUpperCase() : 'IG'}</p>
             </div>
             <div class="cms-card-actions">
                 <button class="btn btn-outline" onclick="editVideo('${vid.id}')"><i class="fa-solid fa-pen icon-spacer"></i>แก้ไข</button>
@@ -530,17 +538,20 @@ window.saveArtistData = async function(e) {
     };
 
     if (id) {
+        data.id = id;
         try { await update(ref(db, `artists/${id}`), data); }
         catch (err) {
             const idx = store.artists.findIndex(a => a.id === id);
-            if (idx !== -1) store.artists[idx] = { id, ...data };
+            if (idx !== -1) store.artists[idx] = data;
         }
     } else {
         try {
             const newRef = push(ref(db, "artists"));
+            data.id = newRef.key;
             await set(newRef, data);
         } catch (err) { 
-            store.artists.push({ id: Date.now().toString(), ...data }); 
+            const newId = Date.now().toString();
+            store.artists.push({ id: newId, ...data }); 
         }
     }
 
@@ -601,17 +612,20 @@ window.saveEventData = async function(e) {
     };
 
     if (id) {
+        data.id = id;
         try { await update(ref(db, `events/${id}`), data); }
         catch (err) {
             const idx = store.events.findIndex(e => e.id === id);
-            if (idx !== -1) store.events[idx] = { id, ...data };
+            if (idx !== -1) store.events[idx] = data;
         }
     } else {
         try {
             const newRef = push(ref(db, "events"));
+            data.id = newRef.key;
             await set(newRef, data);
         } catch (err) { 
-            store.events.push({ id: Date.now().toString(), ...data }); 
+            const newId = Date.now().toString();
+            store.events.push({ id: newId, ...data }); 
         }
     }
 
@@ -663,17 +677,20 @@ window.saveReleaseData = async function(e) {
     };
 
     if (id) {
+        data.id = id;
         try { await update(ref(db, `releases/${id}`), data); }
         catch (err) {
             const idx = store.releases.findIndex(r => r.id === id);
-            if (idx !== -1) store.releases[idx] = { id, ...data };
+            if (idx !== -1) store.releases[idx] = data;
         }
     } else {
         try {
             const newRef = push(ref(db, "releases"));
+            data.id = newRef.key;
             await set(newRef, data);
         } catch (err) { 
-            store.releases.push({ id: Date.now().toString(), ...data }); 
+            const newId = Date.now().toString();
+            store.releases.push({ id: newId, ...data }); 
         }
     }
 
@@ -731,17 +748,20 @@ window.saveVideoData = async function(e) {
     };
 
     if (id) {
+        data.id = id;
         try { await update(ref(db, `videos/${id}`), data); }
         catch (err) {
             const idx = store.videos.findIndex(v => v.id === id);
-            if (idx !== -1) store.videos[idx] = { id, ...data };
+            if (idx !== -1) store.videos[idx] = data;
         }
     } else {
         try {
             const newRef = push(ref(db, "videos"));
+            data.id = newRef.key;
             await set(newRef, data);
         } catch (err) { 
-            store.videos.push({ id: Date.now().toString(), ...data }); 
+            const newId = Date.now().toString();
+            store.videos.push({ id: newId, ...data }); 
         }
     }
 
@@ -793,17 +813,20 @@ window.saveMerchData = async function(e) {
     };
 
     if (id) {
+        data.id = id;
         try { await update(ref(db, `merch/${id}`), data); }
         catch (err) {
             const idx = store.merch.findIndex(m => m.id === id);
-            if (idx !== -1) store.merch[idx] = { id, ...data };
+            if (idx !== -1) store.merch[idx] = data;
         }
     } else {
         try {
             const newRef = push(ref(db, "merch"));
+            data.id = newRef.key;
             await set(newRef, data);
         } catch (err) { 
-            store.merch.push({ id: Date.now().toString(), ...data }); 
+            const newId = Date.now().toString();
+            store.merch.push({ id: newId, ...data }); 
         }
     }
 
@@ -830,24 +853,30 @@ window.saveAboutCulture = async function(e) {
     renderPublicSite();
 };
 
-// อัปเดตฟังก์ชัน deleteItem ใน script.js
+// DELETE ITEM GENERIC (FORCE DUAL SYNC)
 window.deleteItem = async function(colName, id) {
     if (!confirm('ยืนยันการลบรายการนี้?')) return;
 
-    // 1. ลบออกจาก Local Store ทันที
+    // 1. Remove from local store immediately for instant UI responsiveness
     if (store[colName]) {
         store[colName] = store[colName].filter(item => String(item.id) !== String(id));
     }
 
-    // 2. วาดหน้าจอ Public และ Admin ใหม่ทันที
+    // 2. Immediate local re-render
     renderPublicSite();
     renderAdminPanel();
 
-    // 3. ส่งคำสั่งลบบน Firebase Realtime Database
+    // 3. Perform removal in Firebase Realtime DB
     try {
         await remove(ref(db, `${colName}/${id}`));
-        console.log(`ลบรายการ ${id} จาก ${colName} สำเร็จ`);
+        console.log(`Successfully removed ${id} from ${colName}`);
     } catch (err) {
-        console.warn(`ลบใน Firebase ไม่สำเร็จ:`, err);
+        console.warn(`Realtime DB deletion fallback note:`, err);
     }
 };
+
+// INITIALIZE APP ON LOAD
+document.addEventListener('DOMContentLoaded', () => {
+    initFirebaseSync();
+    renderPublicSite();
+});

@@ -2,7 +2,7 @@
 <html lang="th">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>NEVERV!BE | Underground Label & CMS</title>
     <link rel="icon" type="image/x-icon" href="image/logo.png">
     
@@ -48,7 +48,7 @@
             <section id="artists">
                 <h1>Artists</h1>
                 <div class="artist-container" id="artistContainer">
-                    <div style="grid-column: 1/-1; text-align: center; color: #888;">กำลังโหลดข้อมูลศิลปิน...</div>
+                    <div class="loading-state">กำลังโหลดข้อมูลศิลปิน...</div>
                 </div>
             </section>
 
@@ -56,7 +56,7 @@
             <section id="events">
                 <h1>Upcoming Events</h1>
                 <div class="event-container" id="eventContainer">
-                    <div style="text-align: center; color: #888;">กำลังโหลดข้อมูลตารางงาน...</div>
+                    <div class="loading-state">กำลังโหลดข้อมูลตารางงาน...</div>
                 </div>
             </section>
 
@@ -64,7 +64,7 @@
             <section id="releases">
                 <h1>Latest Releases</h1>
                 <div class="release-container" id="releaseContainer">
-                    <div style="grid-column: 1/-1; text-align: center; color: #888;">กำลังโหลดข้อมูลผลงาน...</div>
+                    <div class="loading-state">กำลังโหลดข้อมูลผลงาน...</div>
                 </div>
             </section>
 
@@ -72,7 +72,7 @@
             <section id="videos">
                 <h1>Official Videos</h1>
                 <div class="video-grid" id="videoContainer">
-                    <div style="grid-column: 1/-1; text-align: center; color: #888;">กำลังโหลดวิดีโอ...</div>
+                    <div class="loading-state">กำลังโหลดวิดีโอ...</div>
                 </div>
             </section>
 
@@ -80,7 +80,7 @@
             <section id="merch">
                 <h1>NV Merch Store</h1>
                 <div class="merch-container" id="merchContainer">
-                    <div style="grid-column: 1/-1; text-align: center; color: #888;">กำลังโหลดสินค้า...</div>
+                    <div class="loading-state">กำลังโหลดสินค้า...</div>
                 </div>
             </section>
 
@@ -150,24 +150,24 @@
         <div class="admin-header">
             <div class="admin-title">
                 <h2><i class="fa-solid fa-sliders text-gold icon-spacer"></i>NEVERV!BE CMS</h2>
-                <span class="badge" id="dbStatusBadge"><i class="fa-solid fa-server icon-spacer"></i>FIREBASE REALTIME DB</span>
+                <span class="badge" id="dbStatusBadge"><i class="fa-solid fa-server icon-spacer"></i>REALTIME DB</span>
             </div>
             <div class="admin-nav-actions">
-                <button class="btn btn-outline" onclick="exitAdmin()"><i class="fa-solid fa-eye icon-spacer"></i>ดูหน้าเว็บจริง</button>
-                <button class="btn btn-danger" onclick="logoutAdmin()"><i class="fa-solid fa-power-off icon-spacer"></i>ออกจากระบบ</button>
+                <button class="btn btn-outline" onclick="exitAdmin()"><i class="fa-solid fa-eye icon-spacer"></i>หน้าเว็บจริง</button>
+                <button class="btn btn-danger" onclick="logoutAdmin()"><i class="fa-solid fa-power-off icon-spacer"></i>ออก</button>
             </div>
         </div>
 
         <div class="admin-container">
             <!-- Admin Navigation Tabs -->
             <div class="admin-sidebar">
-                <button class="admin-tab active" onclick="switchTab('artists')"><i class="fa-solid fa-users icon-spacer"></i>จัดการ ARTISTS</button>
-                <button class="admin-tab" onclick="switchTab('events')"><i class="fa-solid fa-calendar-days icon-spacer"></i>จัดการ EVENTS</button>
-                <button class="admin-tab" onclick="switchTab('releases')"><i class="fa-solid fa-compact-disc icon-spacer"></i>จัดการ RELEASES</button>
-                <button class="admin-tab" onclick="switchTab('videos')"><i class="fa-solid fa-film icon-spacer"></i>จัดการ VIDEOS</button>
-                <button class="admin-tab" onclick="switchTab('merch')"><i class="fa-solid fa-shirt icon-spacer"></i>จัดการ MERCH</button>
-                <button class="admin-tab" onclick="switchTab('about')"><i class="fa-solid fa-skull icon-spacer"></i>แก้ไข ABOUT CULTURE</button>
-                <button class="admin-tab" onclick="switchTab('bookings')"><i class="fa-solid fa-envelope-open-text icon-spacer"></i>รายการจ้างงาน BOOKINGS</button>
+                <button class="admin-tab active" onclick="switchTab('artists', this)"><i class="fa-solid fa-users icon-spacer"></i>ARTISTS</button>
+                <button class="admin-tab" onclick="switchTab('events', this)"><i class="fa-solid fa-calendar-days icon-spacer"></i>EVENTS</button>
+                <button class="admin-tab" onclick="switchTab('releases', this)"><i class="fa-solid fa-compact-disc icon-spacer"></i>RELEASES</button>
+                <button class="admin-tab" onclick="switchTab('videos', this)"><i class="fa-solid fa-film icon-spacer"></i>VIDEOS</button>
+                <button class="admin-tab" onclick="switchTab('merch', this)"><i class="fa-solid fa-shirt icon-spacer"></i>MERCH</button>
+                <button class="admin-tab" onclick="switchTab('about', this)"><i class="fa-solid fa-skull icon-spacer"></i>ABOUT</button>
+                <button class="admin-tab" onclick="switchTab('bookings', this)"><i class="fa-solid fa-envelope-open-text icon-spacer"></i>BOOKINGS</button>
             </div>
 
             <!-- Content Area -->
@@ -175,8 +175,8 @@
                 <!-- TAB: ARTISTS -->
                 <div id="tab-artists" class="tab-content active">
                     <div class="tab-header">
-                        <h3>รายการศิลปินในค่าย (Artists)</h3>
-                        <button class="btn btn-gold" onclick="openArtistModal()"><i class="fa-solid fa-plus icon-spacer"></i>เพิ่มศิลปินใหม่</button>
+                        <h3>รายการศิลปิน (Artists)</h3>
+                        <button class="btn btn-gold" onclick="openArtistModal()"><i class="fa-solid fa-plus icon-spacer"></i>เพิ่มศิลปิน</button>
                     </div>
                     <div id="adminArtistList" class="cms-card-grid"></div>
                 </div>
@@ -184,8 +184,8 @@
                 <!-- TAB: EVENTS -->
                 <div id="tab-events" class="tab-content">
                     <div class="tab-header">
-                        <h3>ตารางงานแสดง (Upcoming Events)</h3>
-                        <button class="btn btn-gold" onclick="openEventModal()"><i class="fa-solid fa-plus icon-spacer"></i>เพิ่ม Event ใหม่</button>
+                        <h3>ตารางงานแสดง (Events)</h3>
+                        <button class="btn btn-gold" onclick="openEventModal()"><i class="fa-solid fa-plus icon-spacer"></i>เพิ่ม Event</button>
                     </div>
                     <div id="adminEventList" class="cms-card-grid"></div>
                 </div>
@@ -193,8 +193,8 @@
                 <!-- TAB: RELEASES -->
                 <div id="tab-releases" class="tab-content">
                     <div class="tab-header">
-                        <h3>ผลงานเพลงล่าสุด (Releases)</h3>
-                        <button class="btn btn-gold" onclick="openReleaseModal()"><i class="fa-solid fa-plus icon-spacer"></i>เพิ่ม Release ใหม่</button>
+                        <h3>ผลงานเพลง (Releases)</h3>
+                        <button class="btn btn-gold" onclick="openReleaseModal()"><i class="fa-solid fa-plus icon-spacer"></i>เพิ่ม Release</button>
                     </div>
                     <div id="adminReleaseList" class="cms-card-grid"></div>
                 </div>
@@ -202,8 +202,8 @@
                 <!-- TAB: VIDEOS -->
                 <div id="tab-videos" class="tab-content">
                     <div class="tab-header">
-                        <h3>วิดีโอ (Official Videos / IG Reels)</h3>
-                        <button class="btn btn-gold" onclick="openVideoModal()"><i class="fa-solid fa-plus icon-spacer"></i>เพิ่ม Video ใหม่</button>
+                        <h3>วิดีโอ (Official Videos)</h3>
+                        <button class="btn btn-gold" onclick="openVideoModal()"><i class="fa-solid fa-plus icon-spacer"></i>เพิ่ม Video</button>
                     </div>
                     <div id="adminVideoList" class="cms-card-grid"></div>
                 </div>
@@ -211,8 +211,8 @@
                 <!-- TAB: MERCH -->
                 <div id="tab-merch" class="tab-content">
                     <div class="tab-header">
-                        <h3>สินค้า Official Store (Merch)</h3>
-                        <button class="btn btn-gold" onclick="openMerchModal()"><i class="fa-solid fa-plus icon-spacer"></i>เพิ่มสินค้าใหม่</button>
+                        <h3>สินค้า Store (Merch)</h3>
+                        <button class="btn btn-gold" onclick="openMerchModal()"><i class="fa-solid fa-plus icon-spacer"></i>เพิ่มสินค้า</button>
                     </div>
                     <div id="adminMerchList" class="cms-card-grid"></div>
                 </div>
@@ -220,25 +220,25 @@
                 <!-- TAB: ABOUT -->
                 <div id="tab-about" class="tab-content">
                     <div class="tab-header">
-                        <h3>แก้ไขเนื้อหาหน้า Our Culture (About)</h3>
+                        <h3>เนื้อหา Our Culture (About)</h3>
                     </div>
                     <form class="cms-form" onsubmit="saveAboutCulture(event)">
                         <div class="form-group">
-                            <label>ข้อความโปรย Highlight (เช่น "NV เด็กใต้ดิน?")</label>
+                            <label>ข้อความโปรย Highlight</label>
                             <input type="text" id="editAboutHighlight" class="cms-input" required>
                         </div>
                         <div class="form-group">
-                            <label>เนื้อหาบรรยายความเป็นมา (รองรับ HTML tags เช่น &lt;p&gt;, &lt;strong&gt;, &lt;em&gt;)</label>
-                            <textarea id="editAboutText" class="cms-textarea" rows="10" required></textarea>
+                            <label>เนื้อหาบรรยาย (รองรับ HTML)</label>
+                            <textarea id="editAboutText" class="cms-textarea" rows="8" required></textarea>
                         </div>
-                        <button type="submit" class="btn btn-gold"><i class="fa-solid fa-floppy-disk icon-spacer"></i>บันทึกข้อมูล Culture</button>
+                        <button type="submit" class="btn btn-gold"><i class="fa-solid fa-floppy-disk icon-spacer"></i>บันทึก Culture</button>
                     </form>
                 </div>
 
                 <!-- TAB: BOOKINGS -->
                 <div id="tab-bookings" class="tab-content">
                     <div class="tab-header">
-                        <h3>รายการแจ้งจ้างงานจากหน้าเว็บ (Booking Requests)</h3>
+                        <h3>รายการแจ้งจ้างงาน (Bookings)</h3>
                     </div>
                     <div id="adminBookingList" class="booking-list-container"></div>
                 </div>
@@ -252,13 +252,13 @@
     <!-- 1. Password Auth Modal -->
     <div id="authModal" class="modal">
         <div class="modal-content text-center">
-            <h3><i class="fa-solid fa-shield-halved text-gold icon-spacer"></i>เข้าสู่ระบบ Admin CMS</h3>
-            <p style="color: #aaa; margin-bottom: 20px; font-size: 0.9rem;">กรุณากรอกรหัสผ่านเพื่อเข้าสู่หน้าจัดการค่าย (Default: nv2026)</p>
+            <h3><i class="fa-solid fa-shield-halved text-gold icon-spacer"></i>Admin CMS Login</h3>
+            <p style="color: #aaa; margin-bottom: 20px; font-size: 0.85rem;">กรุณากรอกรหัสผ่านเพื่อเข้าสู่ระบบ (Passcode: nv2026)</p>
             <form onsubmit="verifyAdminPassword(event)">
                 <input type="password" id="adminPasscode" class="cms-input" placeholder="Passcode" style="margin-bottom: 20px; text-align: center;" required>
                 <div style="display: flex; gap: 10px; justify-content: center;">
                     <button type="button" class="btn btn-outline" onclick="closeModal('authModal')">ยกเลิก</button>
-                    <button type="submit" class="btn btn-gold">ยืนยัน</button>
+                    <button type="submit" class="btn btn-gold">เข้าสู่ระบบ</button>
                 </div>
             </form>
         </div>
@@ -267,7 +267,7 @@
     <!-- 2. Public Artist Profile Modal -->
     <div id="artistProfileModal" class="modal">
         <div class="modal-content artist-profile-modal">
-            <button class="close-modal-btn" onclick="closeModal('artistProfileModal')">&times;</button>
+            <button class="modal-close-btn" onclick="closeModal('artistProfileModal')">&times;</button>
             <div id="artistProfileDetail"></div>
         </div>
     </div>
@@ -280,21 +280,21 @@
             <form class="cms-form" onsubmit="saveArtistData(event)">
                 <input type="hidden" id="artId">
                 <div class="form-group">
-                    <label>ชื่อศิลปิน (Artist Name)</label>
+                    <label>ชื่อศิลปิน</label>
                     <input type="text" id="artName" class="cms-input" placeholder="เช่น TRAPMEEN!" required>
                 </div>
                 <div class="form-group">
-                    <label>แนวเพลง (Genre Tags)</label>
-                    <input type="text" id="artGenre" class="cms-input" placeholder="เช่น #TRAP #MELODIC #UNDERGROUND">
+                    <label>แนวเพลง (Tags)</label>
+                    <input type="text" id="artGenre" class="cms-input" placeholder="เช่น #TRAP #MELODIC">
                 </div>
                 
                 <!-- ImgBB Upload Widget -->
                 <div class="form-group">
-                    <label>รูปภาพหลักศิลปิน (Main Profile Image)</label>
+                    <label>รูปภาพหลัก (Main Profile Image)</label>
                     <div class="imgbb-upload-container">
-                        <input type="text" id="artImage" class="cms-input" placeholder="วาง URL รูปภาพ หรือ อัปโหลดด้านขวา" required>
+                        <input type="text" id="artImage" class="cms-input" placeholder="วาง URL รูปภาพ หรือ อัปโหลด" required>
                         <label class="btn btn-outline upload-btn">
-                            <i class="fa-solid fa-cloud-arrow-up icon-spacer"></i>อัปโหลด ImgBB
+                            <i class="fa-solid fa-cloud-arrow-up icon-spacer"></i>ImgBB
                             <input type="file" accept="image/*" onchange="uploadToImgBB(this, 'artImage', 'artImgPreview', 'artUploadProgress')" hidden>
                         </label>
                     </div>
@@ -304,17 +304,17 @@
 
                 <div class="form-group">
                     <label>ประวัติศิลปิน (Biography)</label>
-                    <textarea id="artBio" class="cms-textarea" rows="4" placeholder="รายละเอียดสไตล์เพลง ประวัติ..."></textarea>
+                    <textarea id="artBio" class="cms-textarea" rows="4" placeholder="รายละเอียดสไตล์เพลง..."></textarea>
                 </div>
 
-                <h4 class="form-section-title">เรทราคาการร่วมงาน (Featuring Rates)</h4>
+                <h4 class="form-section-title">เรทราคาการร่วมงาน (Rates)</h4>
                 <div class="form-row">
-                    <div class="form-group"><label>Hook Rate (THB)</label><input type="text" id="rateHook" class="cms-input" placeholder="500 THB"></div>
-                    <div class="form-group"><label>Verse Rate (THB)</label><input type="text" id="rateVerse" class="cms-input" placeholder="700 THB"></div>
-                    <div class="form-group"><label>Hook + Verse (THB)</label><input type="text" id="rateBoth" class="cms-input" placeholder="1000 THB"></div>
+                    <div class="form-group"><label>Hook Rate</label><input type="text" id="rateHook" class="cms-input" placeholder="500 THB"></div>
+                    <div class="form-group"><label>Verse Rate</label><input type="text" id="rateVerse" class="cms-input" placeholder="700 THB"></div>
+                    <div class="form-group"><label>Verse + Hook</label><input type="text" id="rateBoth" class="cms-input" placeholder="1000 THB"></div>
                 </div>
 
-                <h4 class="form-section-title">ช่องทาง Streaming & Social Links</h4>
+                <h4 class="form-section-title">Streaming & Social Links</h4>
                 <div class="form-row">
                     <div class="form-group"><label>Spotify URL</label><input type="text" id="artSpotify" class="cms-input" placeholder="https://open.spotify.com/..."></div>
                     <div class="form-group"><label>Apple Music URL</label><input type="text" id="artApple" class="cms-input" placeholder="https://music.apple.com/..."></div>
@@ -333,7 +333,7 @@
 
                 <div class="form-actions">
                     <button type="button" class="btn btn-outline" onclick="closeModal('artistFormModal')">ยกเลิก</button>
-                    <button type="submit" class="btn btn-gold">บันทึกข้อมูลศิลปิน</button>
+                    <button type="submit" class="btn btn-gold">บันทึกศิลปิน</button>
                 </div>
             </form>
         </div>
@@ -347,29 +347,29 @@
             <form class="cms-form" onsubmit="saveEventData(event)">
                 <input type="hidden" id="evId">
                 <div class="form-group">
-                    <label>ชื่องาน Event (Event Title)</label>
+                    <label>ชื่องาน Event</label>
                     <input type="text" id="evTitle" class="cms-input" placeholder="เช่น Source.wav vol3" required>
                 </div>
                 <div class="form-row">
                     <div class="form-group">
-                        <label>วันและเวลา (Date & Time)</label>
+                        <label>วันและเวลา</label>
                         <input type="text" id="evDate" class="cms-input" placeholder="เช่น 24 พฤษภาคม 2026, 19:00" required>
                     </div>
                     <div class="form-group">
-                        <label>สถานที่ (Location)</label>
+                        <label>สถานที่</label>
                         <input type="text" id="evLocation" class="cms-input" placeholder="เช่น Redhotmoon Livehouse" required>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label>ไลน์อัปศิลปิน (Lineup Artists)</label>
-                    <input type="text" id="evArtists" class="cms-input" placeholder="เช่น Line up: AKITO, TRAPMEEN!, N4, T4NN">
+                    <label>ไลน์อัปศิลปิน</label>
+                    <input type="text" id="evArtists" class="cms-input" placeholder="เช่น Line up: AKITO, TRAPMEEN!, N4">
                 </div>
                 <div class="form-group">
-                    <label>โปสเตอร์งาน Event (Poster Image)</label>
+                    <label>โปสเตอร์งาน Event</label>
                     <div class="imgbb-upload-container">
-                        <input type="text" id="evPoster" class="cms-input" placeholder="วาง URL หรือ อัปโหลดผ่าน ImgBB" required>
+                        <input type="text" id="evPoster" class="cms-input" placeholder="วาง URL หรือ อัปโหลด" required>
                         <label class="btn btn-outline upload-btn">
-                            <i class="fa-solid fa-cloud-arrow-up icon-spacer"></i>อัปโหลด ImgBB
+                            <i class="fa-solid fa-cloud-arrow-up icon-spacer"></i>ImgBB
                             <input type="file" accept="image/*" onchange="uploadToImgBB(this, 'evPoster', 'evPosterPreview', 'evUploadProgress')" hidden>
                         </label>
                     </div>
@@ -378,11 +378,11 @@
                 </div>
                 <div class="form-row">
                     <div class="form-group">
-                        <label>ข้อความบนปุ่ม (Button Text)</label>
+                        <label>ข้อความบนปุ่ม</label>
                         <input type="text" id="evStatus" class="cms-input" placeholder="เช่น Get Tickets" required>
                     </div>
                     <div class="form-group">
-                        <label>ลิงก์ซื้อบัตร/รายละเอียด (Ticket URL)</label>
+                        <label>ลิงก์ซื้อบัตร/รายละเอียด</label>
                         <input type="text" id="evUrl" class="cms-input" placeholder="https://www.ticketmelon.com/..." required>
                     </div>
                 </div>
@@ -398,23 +398,23 @@
     <div id="releaseFormModal" class="modal">
         <div class="modal-content">
             <button class="close-modal-btn" onclick="closeModal('releaseFormModal')">&times;</button>
-            <h3 id="releaseModalTitle">จัดการผลงานเพลง (Release)</h3>
+            <h3 id="releaseModalTitle">จัดการผลงานเพลง</h3>
             <form class="cms-form" onsubmit="saveReleaseData(event)">
                 <input type="hidden" id="relId">
                 <div class="form-group">
-                    <label>ชื่อเพลง / อัลบั้ม (Track Title)</label>
+                    <label>ชื่อเพลง / อัลบั้ม</label>
                     <input type="text" id="relTitle" class="cms-input" placeholder="เช่น ตอนสุดท้าย" required>
                 </div>
                 <div class="form-group">
-                    <label>ชื่อศิลปินเจ้าของเพลง (Artist Name)</label>
+                    <label>ชื่อศิลปินเจ้าของเพลง</label>
                     <input type="text" id="relArtist" class="cms-input" placeholder="เช่น N4" required>
                 </div>
                 <div class="form-group">
-                    <label>ภาพปกเพลง (Cover Artwork)</label>
+                    <label>ภาพปกเพลง</label>
                     <div class="imgbb-upload-container">
-                        <input type="text" id="relCover" class="cms-input" placeholder="วาง URL หรือ อัปโหลดผ่าน ImgBB" required>
+                        <input type="text" id="relCover" class="cms-input" placeholder="วาง URL หรือ อัปโหลด" required>
                         <label class="btn btn-outline upload-btn">
-                            <i class="fa-solid fa-cloud-arrow-up icon-spacer"></i>อัปโหลด ImgBB
+                            <i class="fa-solid fa-cloud-arrow-up icon-spacer"></i>ImgBB
                             <input type="file" accept="image/*" onchange="uploadToImgBB(this, 'relCover', 'relCoverPreview', 'relUploadProgress')" hidden>
                         </label>
                     </div>
@@ -422,7 +422,7 @@
                     <img id="relCoverPreview" class="img-preview" alt="Preview">
                 </div>
                 <div class="form-group">
-                    <label>ลิงก์รับฟังเพลง (Streaming / YouTube Link)</label>
+                    <label>ลิงก์รับฟังเพลง</label>
                     <input type="text" id="relUrl" class="cms-input" placeholder="https://www.youtube.com/watch?v=..." required>
                 </div>
                 <div class="form-actions">
@@ -437,15 +437,15 @@
     <div id="videoFormModal" class="modal">
         <div class="modal-content">
             <button class="close-modal-btn" onclick="closeModal('videoFormModal')">&times;</button>
-            <h3 id="videoModalTitle">จัดการวิดีโอ (Video Embed)</h3>
+            <h3 id="videoModalTitle">จัดการวิดีโอ</h3>
             <form class="cms-form" onsubmit="saveVideoData(event)">
                 <input type="hidden" id="vidId">
                 <div class="form-group">
-                    <label>ชื่อวิดีโอ (Video Title)</label>
+                    <label>ชื่อวิดีโอ</label>
                     <input type="text" id="vidTitle" class="cms-input" placeholder="เช่น Melt Livehouse 🔥🎤" required>
                 </div>
                 <div class="form-group">
-                    <label>ประเภทวิดีโอ (Video Source Type)</label>
+                    <label>ประเภทวิดีโอ</label>
                     <select id="vidType" class="cms-input" onchange="toggleVideoTypeInput()">
                         <option value="ig">Instagram Reel ID</option>
                         <option value="yt">YouTube Embed URL</option>
@@ -471,19 +471,19 @@
             <form class="cms-form" onsubmit="saveMerchData(event)">
                 <input type="hidden" id="mchId">
                 <div class="form-group">
-                    <label>ชื่อสินค้า (Product Name)</label>
+                    <label>ชื่อสินค้า</label>
                     <input type="text" id="mchName" class="cms-input" placeholder="เช่น NV Official TEE" required>
                 </div>
                 <div class="form-group">
-                    <label>ราคา (Price)</label>
+                    <label>ราคา</label>
                     <input type="text" id="mchPrice" class="cms-input" placeholder="เช่น 790 THB" required>
                 </div>
                 <div class="form-group">
-                    <label>รูปภาพสินค้า (Product Image)</label>
+                    <label>รูปภาพสินค้า</label>
                     <div class="imgbb-upload-container">
-                        <input type="text" id="mchImage" class="cms-input" placeholder="วาง URL หรือ อัปโหลดผ่าน ImgBB" required>
+                        <input type="text" id="mchImage" class="cms-input" placeholder="วาง URL หรือ อัปโหลด" required>
                         <label class="btn btn-outline upload-btn">
-                            <i class="fa-solid fa-cloud-arrow-up icon-spacer"></i>อัปโหลด ImgBB
+                            <i class="fa-solid fa-cloud-arrow-up icon-spacer"></i>ImgBB
                             <input type="file" accept="image/*" onchange="uploadToImgBB(this, 'mchImage', 'mchImagePreview', 'mchUploadProgress')" hidden>
                         </label>
                     </div>
@@ -491,18 +491,18 @@
                     <img id="mchImagePreview" class="img-preview" alt="Preview">
                 </div>
                 <div class="form-group">
-                    <label>ลิงก์สั่งซื้อ (Order Link / LINE / Store)</label>
+                    <label>ลิงก์สั่งซื้อ (LINE / Store)</label>
                     <input type="text" id="mchLink" class="cms-input" placeholder="https://line.me/R/ti/p/..." required>
                 </div>
                 <div class="form-actions">
                     <button type="button" class="btn btn-outline" onclick="closeModal('merchFormModal')">ยกเลิก</button>
-                    <button type="submit" class="btn btn-gold">บันทึก สินค้า</button>
+                    <button type="submit" class="btn btn-gold">บันทึกสินค้า</button>
                 </div>
             </form>
         </div>
     </div>
 
-    <!-- Main JavaScript Modules -->
+    <!-- Main JavaScript Module -->
     <script type="module" src="script.js"></script>
 </body>
 </html>
