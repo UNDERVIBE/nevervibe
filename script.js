@@ -67,21 +67,24 @@ function initFirebaseSync() {
         onValue(dbRef, (snapshot) => {
             const data = snapshot.val();
             if (data) {
-                // ถ้ามีข้อมูลบน Firebase ให้ใช้ข้อมูลจาก Firebase
+                // แปลงข้อมูล Object จาก Firebase เป็น Array พร้อม id
                 store[colName] = Object.keys(data).map(key => ({
                     id: key,
                     ...data[key]
                 }));
-                renderPublicSite();
-                renderAdminPanel();
             } else {
-                // ถ้าบน Firebase ยังเป็น null (โหนดว่างเปล่า) 
-                // ให้คงค่า Mock Data ใน store ไว้เหมือนเดิม และวาดหน้าจอ
-                renderPublicSite();
-                renderAdminPanel();
+                // ถ้าใน Firebase เป็นว่างเปล่า ให้ล้างค่าใน store
+                store[colName] = [];
             }
+            
+            // ⚠️ สำคัญมาก: สั่ง Render หน้าเว็บจริง (Public) และหน้า Admin ใหม่ทันทีที่ข้อมูลมา
+            renderPublicSite();
+            renderAdminPanel();
         }, (error) => {
             console.warn(`Realtime DB path [${colName}] error:`, error);
+            // กรณีเกิด error ให้วาดหน้าจอจาก Mock Data เดิม
+            renderPublicSite();
+            renderAdminPanel();
         });
     });
 
@@ -94,7 +97,6 @@ function initFirebaseSync() {
         }
     });
 }
-
 // --- 3. PUBLIC SITE RENDERING ---
 function renderPublicSite() {
     // Render Artists
@@ -828,26 +830,24 @@ window.saveAboutCulture = async function(e) {
     renderPublicSite();
 };
 
-// DELETE ITEM GENERIC (REALTIME DB REMOVAL)
+// อัปเดตฟังก์ชัน deleteItem ใน script.js
 window.deleteItem = async function(colName, id) {
     if (!confirm('ยืนยันการลบรายการนี้?')) return;
 
-    try {
-        await remove(ref(db, `${colName}/${id}`));
-    } catch (err) {
-        console.warn(`ไม่สามารถลบใน Realtime DB ได้ (ลบใน Local State แทน):`, err);
-    }
-
+    // 1. ลบออกจาก Local Store ทันที
     if (store[colName]) {
-        store[colName] = store[colName].filter(item => item.id !== id);
+        store[colName] = store[colName].filter(item => String(item.id) !== String(id));
     }
 
+    // 2. วาดหน้าจอ Public และ Admin ใหม่ทันที
     renderPublicSite();
     renderAdminPanel();
-};
 
-// INITIALIZE APP
-document.addEventListener('DOMContentLoaded', () => {
-    initFirebaseSync();
-    renderPublicSite();
-});
+    // 3. ส่งคำสั่งลบบน Firebase Realtime Database
+    try {
+        await remove(ref(db, `${colName}/${id}`));
+        console.log(`ลบรายการ ${id} จาก ${colName} สำเร็จ`);
+    } catch (err) {
+        console.warn(`ลบใน Firebase ไม่สำเร็จ:`, err);
+    }
+};
