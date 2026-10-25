@@ -1,11 +1,11 @@
 // =========================================================
-// NEVERV!BE - WEB APP & ADMIN CMS SCRIPT (FIREBASE + IMGBB)
+// NEVERV!BE - WEB APP & ADMIN CMS SCRIPT (REALTIME DB + IMGBB)
 // =========================================================
 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js";
 import { 
-    getFirestore, collection, onSnapshot, doc, setDoc, addDoc, deleteDoc, updateDoc 
-} from "https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore.js";
+    getDatabase, ref, onValue, set, push, remove, update 
+} from "https://www.gstatic.com/firebasejs/10.11.0/firebase-database.js";
 
 // --- 1. CONFIGURATION ---
 const firebaseConfig = {
@@ -15,15 +15,16 @@ const firebaseConfig = {
     storageBucket: "nevervibe-5e049.firebasestorage.app",
     messagingSenderId: "535721157547",
     appId: "1:535721157547:web:0dff6dbfd63ffff407a8ee",
-    measurementId: "G-L4MMSBSMX5"
+    measurementId: "G-L4MMSBSMX5",
+    databaseURL: "https://nevervibe-5e049-default-rtdb.firebaseio.com" // Realtime Database URL
 };
 
 const IMGBB_API_KEY = "1a163cec2c80a29352d2ae9d9694a589";
 const ADMIN_PASSCODE = "nv2026";
 
-// Initialize Firebase
+// Initialize Firebase Realtime Database
 const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
+const db = getDatabase(app);
 
 // Local State Store (Auto fallback if DB is empty or offline)
 let store = {
@@ -57,25 +58,33 @@ let store = {
     bookings: []
 };
 
-// --- 2. FIREBASE REAL-TIME LISTENERS ---
+// --- 2. FIREBASE REALTIME DATABASE LISTENERS ---
 function initFirebaseSync() {
     const collections = ['artists', 'events', 'releases', 'videos', 'merch', 'bookings'];
     
     collections.forEach(colName => {
-        onSnapshot(collection(db, colName), (snapshot) => {
-            if (!snapshot.empty) {
-                store[colName] = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-                renderPublicSite();
-                renderAdminPanel();
+        const dbRef = ref(db, colName);
+        onValue(dbRef, (snapshot) => {
+            const data = snapshot.val();
+            if (data) {
+                store[colName] = Object.keys(data).map(key => ({
+                    id: key,
+                    ...data[key]
+                }));
+            } else {
+                store[colName] = [];
             }
+            renderPublicSite();
+            renderAdminPanel();
         }, (error) => {
-            console.warn(`Firestore collection [${colName}] using local state fallback:`, error);
+            console.warn(`Realtime DB path [${colName}] error:`, error);
         });
     });
 
-    onSnapshot(doc(db, "settings", "about"), (docSnap) => {
-        if (docSnap.exists()) {
-            store.about = docSnap.data();
+    onValue(ref(db, "settings/about"), (snapshot) => {
+        const data = snapshot.val();
+        if (data) {
+            store.about = data;
             renderPublicSite();
             renderAdminPanel();
         }
@@ -242,7 +251,8 @@ window.handlePublicBooking = async function(e) {
     };
 
     try {
-        await addDoc(collection(db, "bookings"), data);
+        const newRef = push(ref(db, "bookings"));
+        await set(newRef, data);
     } catch (err) {
         store.bookings.push({ id: Date.now().toString(), ...data });
     }
@@ -514,14 +524,18 @@ window.saveArtistData = async function(e) {
     };
 
     if (id) {
-        try { await updateDoc(doc(db, "artists", id), data); }
+        try { await update(ref(db, `artists/${id}`), data); }
         catch (err) {
             const idx = store.artists.findIndex(a => a.id === id);
             if (idx !== -1) store.artists[idx] = { id, ...data };
         }
     } else {
-        try { await addDoc(collection(db, "artists"), data); }
-        catch (err) { store.artists.push({ id: Date.now().toString(), ...data }); }
+        try {
+            const newRef = push(ref(db, "artists"));
+            await set(newRef, data);
+        } catch (err) { 
+            store.artists.push({ id: Date.now().toString(), ...data }); 
+        }
     }
 
     closeModal('artistFormModal');
@@ -581,14 +595,18 @@ window.saveEventData = async function(e) {
     };
 
     if (id) {
-        try { await updateDoc(doc(db, "events", id), data); }
+        try { await update(ref(db, `events/${id}`), data); }
         catch (err) {
             const idx = store.events.findIndex(e => e.id === id);
             if (idx !== -1) store.events[idx] = { id, ...data };
         }
     } else {
-        try { await addDoc(collection(db, "events"), data); }
-        catch (err) { store.events.push({ id: Date.now().toString(), ...data }); }
+        try {
+            const newRef = push(ref(db, "events"));
+            await set(newRef, data);
+        } catch (err) { 
+            store.events.push({ id: Date.now().toString(), ...data }); 
+        }
     }
 
     closeModal('eventFormModal');
@@ -639,14 +657,18 @@ window.saveReleaseData = async function(e) {
     };
 
     if (id) {
-        try { await updateDoc(doc(db, "releases", id), data); }
+        try { await update(ref(db, `releases/${id}`), data); }
         catch (err) {
             const idx = store.releases.findIndex(r => r.id === id);
             if (idx !== -1) store.releases[idx] = { id, ...data };
         }
     } else {
-        try { await addDoc(collection(db, "releases"), data); }
-        catch (err) { store.releases.push({ id: Date.now().toString(), ...data }); }
+        try {
+            const newRef = push(ref(db, "releases"));
+            await set(newRef, data);
+        } catch (err) { 
+            store.releases.push({ id: Date.now().toString(), ...data }); 
+        }
     }
 
     closeModal('releaseFormModal');
@@ -703,14 +725,18 @@ window.saveVideoData = async function(e) {
     };
 
     if (id) {
-        try { await updateDoc(doc(db, "videos", id), data); }
+        try { await update(ref(db, `videos/${id}`), data); }
         catch (err) {
             const idx = store.videos.findIndex(v => v.id === id);
             if (idx !== -1) store.videos[idx] = { id, ...data };
         }
     } else {
-        try { await addDoc(collection(db, "videos"), data); }
-        catch (err) { store.videos.push({ id: Date.now().toString(), ...data }); }
+        try {
+            const newRef = push(ref(db, "videos"));
+            await set(newRef, data);
+        } catch (err) { 
+            store.videos.push({ id: Date.now().toString(), ...data }); 
+        }
     }
 
     closeModal('videoFormModal');
@@ -761,14 +787,18 @@ window.saveMerchData = async function(e) {
     };
 
     if (id) {
-        try { await updateDoc(doc(db, "merch", id), data); }
+        try { await update(ref(db, `merch/${id}`), data); }
         catch (err) {
             const idx = store.merch.findIndex(m => m.id === id);
             if (idx !== -1) store.merch[idx] = { id, ...data };
         }
     } else {
-        try { await addDoc(collection(db, "merch"), data); }
-        catch (err) { store.merch.push({ id: Date.now().toString(), ...data }); }
+        try {
+            const newRef = push(ref(db, "merch"));
+            await set(newRef, data);
+        } catch (err) { 
+            store.merch.push({ id: Date.now().toString(), ...data }); 
+        }
     }
 
     closeModal('merchFormModal');
@@ -785,7 +815,7 @@ window.saveAboutCulture = async function(e) {
     };
 
     try {
-        await setDoc(doc(db, "settings", "about"), data);
+        await set(ref(db, "settings/about"), data);
     } catch (err) {
         store.about = data;
     }
@@ -794,14 +824,14 @@ window.saveAboutCulture = async function(e) {
     renderPublicSite();
 };
 
-// DELETE ITEM GENERIC (FIXED REMOVAL FROM STATE)
+// DELETE ITEM GENERIC (REALTIME DB REMOVAL)
 window.deleteItem = async function(colName, id) {
     if (!confirm('ยืนยันการลบรายการนี้?')) return;
 
     try {
-        await deleteDoc(doc(db, colName, id));
+        await remove(ref(db, `${colName}/${id}`));
     } catch (err) {
-        console.warn(`ไม่สามารถลบใน Firestore ได้ (กำลังลบจาก Local State แทน):`, err);
+        console.warn(`ไม่สามารถลบใน Realtime DB ได้ (ลบใน Local State แทน):`, err);
     }
 
     if (store[colName]) {
