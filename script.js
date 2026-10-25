@@ -16,7 +16,7 @@ const firebaseConfig = {
     messagingSenderId: "535721157547",
     appId: "1:535721157547:web:0dff6dbfd63ffff407a8ee",
     measurementId: "G-L4MMSBSMX5",
-    databaseURL: "https://nevervibe-5e049-default-rtdb.firebaseio.com" // Realtime Database URL
+    databaseURL: "https://nevervibe-5e049-default-rtdb.asia-southeast1.firebasedatabase.app" // Realtime Database URL
 };
 
 const IMGBB_API_KEY = "1a163cec2c80a29352d2ae9d9694a589";
@@ -58,7 +58,7 @@ let store = {
     bookings: []
 };
 
-// --- 2. FIREBASE REALTIME DATABASE LISTENERS ---
+// อัปเดตฟังก์ชัน initFirebaseSync ใน script.js
 function initFirebaseSync() {
     const collections = ['artists', 'events', 'releases', 'videos', 'merch', 'bookings'];
     
@@ -67,15 +67,19 @@ function initFirebaseSync() {
         onValue(dbRef, (snapshot) => {
             const data = snapshot.val();
             if (data) {
+                // ถ้ามีข้อมูลบน Firebase ให้ใช้ข้อมูลจาก Firebase
                 store[colName] = Object.keys(data).map(key => ({
                     id: key,
                     ...data[key]
                 }));
+                renderPublicSite();
+                renderAdminPanel();
             } else {
-                store[colName] = [];
+                // ถ้าบน Firebase ยังเป็น null (โหนดว่างเปล่า) 
+                // ให้คงค่า Mock Data ใน store ไว้เหมือนเดิม และวาดหน้าจอ
+                renderPublicSite();
+                renderAdminPanel();
             }
-            renderPublicSite();
-            renderAdminPanel();
         }, (error) => {
             console.warn(`Realtime DB path [${colName}] error:`, error);
         });
