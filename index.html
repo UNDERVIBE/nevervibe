@@ -20,15 +20,24 @@
     <!-- ==================== PUBLIC SITE ==================== -->
     <div id="publicSite">
         <!-- Navigation -->
-        <nav class="main-nav">
-            <a href="#artists"><i class="fa-solid fa-users icon-spacer"></i>ARTISTS</a>
-            <a href="#events"><i class="fa-solid fa-calendar-days icon-spacer"></i>EVENTS</a>
-            <a href="#releases"><i class="fa-solid fa-compact-disc icon-spacer"></i>RELEASES</a>
-            <a href="#videos"><i class="fa-solid fa-film icon-spacer"></i>VIDEOS</a>
-            <a href="#merch"><i class="fa-solid fa-shirt icon-spacer"></i>MERCH</a>
-            <a href="#about"><i class="fa-solid fa-skull icon-spacer"></i>ABOUT</a>
-            <a href="#booking" class="nav-booking"><i class="fa-solid fa-ticket icon-spacer"></i>BOOKING</a>
-            <button class="cms-btn" onclick="openAuthModal()"><i class="fa-solid fa-lock icon-spacer"></i>ADMIN CMS</button>
+        <nav class="main-nav" id="mainNav">
+            <a href="#" class="nav-brand-logo">NEVERV!BE</a>
+            
+            <button class="nav-toggle" id="navToggle" onclick="toggleMobileNav()" aria-label="Toggle Navigation">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+            
+            <div class="nav-links" id="navLinks">
+                <a href="#artists" onclick="closeMobileNav()"><i class="fa-solid fa-users icon-spacer"></i>ARTISTS</a>
+                <a href="#producers" onclick="closeMobileNav()"><i class="fa-solid fa-sliders icon-spacer"></i>PRODUCERS</a>
+                <a href="#events" onclick="closeMobileNav()"><i class="fa-solid fa-calendar-days icon-spacer"></i>EVENTS</a>
+                <a href="#releases" onclick="closeMobileNav()"><i class="fa-solid fa-compact-disc icon-spacer"></i>RELEASES</a>
+                <a href="#videos" onclick="closeMobileNav()"><i class="fa-solid fa-film icon-spacer"></i>VIDEOS</a>
+                <a href="#merch" onclick="closeMobileNav()"><i class="fa-solid fa-shirt icon-spacer"></i>MERCH</a>
+                <a href="#about" onclick="closeMobileNav()"><i class="fa-solid fa-skull icon-spacer"></i>ABOUT</a>
+                <a href="#booking" class="nav-booking" onclick="closeMobileNav()"><i class="fa-solid fa-ticket icon-spacer"></i>BOOKING</a>
+                <button class="cms-btn" onclick="openAuthModal(); closeMobileNav();"><i class="fa-solid fa-lock icon-spacer"></i>ADMIN CMS</button>
+            </div>
         </nav>
 
         <!-- Header -->
@@ -49,6 +58,14 @@
                 <h1>Artists</h1>
                 <div class="artist-container" id="artistContainer">
                     <div class="loading-state">กำลังโหลดข้อมูลศิลปิน...</div>
+                </div>
+            </section>
+
+            <!-- PRODUCERS SECTION -->
+            <section id="producers">
+                <h1>Producers / Beatmakers</h1>
+                <div class="artist-container" id="producerContainer">
+                    <div class="loading-state">กำลังโหลดข้อมูลโปรดิวเซอร์...</div>
                 </div>
             </section>
 
@@ -95,9 +112,9 @@
 
             <!-- BOOKING SECTION -->
             <section id="booking">
-                <h1>Artist Booking</h1>
+                <h1>Artist & Beat Booking</h1>
                 <div class="booking-container">
-                    <p class="booking-desc">ติดต่องานจ้างงานโชว์ หรืองาน Event ต่างๆ</p>
+                    <p class="booking-desc">ติดต่องานจ้าง งานโชว์ หรือสั่งทำบีท/ซื้อบีท</p>
                     <form id="bookingForm" class="booking-form" onsubmit="handlePublicBooking(event)">
                         <div class="form-group">
                             <input type="text" id="bkName" placeholder="ชื่อผู้ติดต่อ / ชื่องาน" required>
@@ -105,19 +122,25 @@
                         </div>
                         <div class="form-group">
                             <select id="bkArtist" required>
-                                <option value="" disabled selected>เลือกศิลปินที่สนใจ</option>
-                                <option value="TRAPMEEN!">TRAPMEEN!</option>
-                                <option value="N4">N4</option>
-                                <option value="B$TN">B$TN</option>
-                                <option value="AKITO†">AKITO†</option>
-                                <option value="SRY4LATE">SRY4LATE</option>
-                                <option value="T4NN">T4NN</option>
-                                <option value="CASHTY">CASHTY</option>
-                                <option value="ALL">เหมาค่าย (All Artists)</option>
+                                <option value="" disabled selected>เลือกศิลปิน / โปรดิวเซอร์ที่สนใจ</option>
+                                <optgroup label="ศิลปิน (Artists)">
+                                    <option value="TRAPMEEN!">TRAPMEEN!</option>
+                                    <option value="N4">N4</option>
+                                    <option value="B$TN">B$TN</option>
+                                    <option value="AKITO†">AKITO†</option>
+                                    <option value="SRY4LATE">SRY4LATE</option>
+                                    <option value="T4NN">T4NN</option>
+                                    <option value="CASHTY">CASHTY</option>
+                                    <option value="ALL_ARTISTS">เหมาศิลปินค่าย (All Artists)</option>
+                                </optgroup>
+                                <optgroup label="โปรดิวเซอร์ (Producers)">
+                                    <option value="NV BEATS">NV BEATS</option>
+                                    <option value="ALL_PRODUCERS">โปรดิวเซอร์ทั้งหมด</option>
+                                </optgroup>
                             </select>
                             <input type="date" id="bkDate" required>
                         </div>
-                        <textarea id="bkDetail" placeholder="รายละเอียดงาน (สถานที่, เวลา, งบประมาณ)" rows="4" required></textarea>
+                        <textarea id="bkDetail" placeholder="รายละเอียดงาน (สถานที่, เวลา, แนวบีทที่ต้องการ, งบประมาณ)" rows="4" required></textarea>
                         <button type="submit" class="submit-btn">SEND REQUEST</button>
                     </form>
                 </div>
@@ -146,7 +169,6 @@
 
     <!-- ==================== ADMIN CMS PANEL ==================== -->
     <div id="adminPanel">
-        <!-- Admin Header -->
         <div class="admin-header">
             <div class="admin-title">
                 <h2><i class="fa-solid fa-sliders text-gold icon-spacer"></i>NEVERV!BE CMS</h2>
@@ -159,9 +181,9 @@
         </div>
 
         <div class="admin-container">
-            <!-- Admin Navigation Tabs -->
             <div class="admin-sidebar">
                 <button class="admin-tab active" onclick="switchTab('artists', this)"><i class="fa-solid fa-users icon-spacer"></i>ARTISTS</button>
+                <button class="admin-tab" onclick="switchTab('producers', this)"><i class="fa-solid fa-sliders icon-spacer"></i>PRODUCERS</button>
                 <button class="admin-tab" onclick="switchTab('events', this)"><i class="fa-solid fa-calendar-days icon-spacer"></i>EVENTS</button>
                 <button class="admin-tab" onclick="switchTab('releases', this)"><i class="fa-solid fa-compact-disc icon-spacer"></i>RELEASES</button>
                 <button class="admin-tab" onclick="switchTab('videos', this)"><i class="fa-solid fa-film icon-spacer"></i>VIDEOS</button>
@@ -170,9 +192,7 @@
                 <button class="admin-tab" onclick="switchTab('bookings', this)"><i class="fa-solid fa-envelope-open-text icon-spacer"></i>BOOKINGS</button>
             </div>
 
-            <!-- Content Area -->
             <div class="admin-content">
-                <!-- TAB: ARTISTS -->
                 <div id="tab-artists" class="tab-content active">
                     <div class="tab-header">
                         <h3>รายการศิลปิน (Artists)</h3>
@@ -181,7 +201,14 @@
                     <div id="adminArtistList" class="cms-card-grid"></div>
                 </div>
 
-                <!-- TAB: EVENTS -->
+                <div id="tab-producers" class="tab-content">
+                    <div class="tab-header">
+                        <h3>รายการคนกดบีท/โปรดิวเซอร์ (Producers)</h3>
+                        <button class="btn btn-gold" onclick="openProducerModal()"><i class="fa-solid fa-plus icon-spacer"></i>เพิ่มโปรดิวเซอร์</button>
+                    </div>
+                    <div id="adminProducerList" class="cms-card-grid"></div>
+                </div>
+
                 <div id="tab-events" class="tab-content">
                     <div class="tab-header">
                         <h3>ตารางงานแสดง (Events)</h3>
@@ -190,7 +217,6 @@
                     <div id="adminEventList" class="cms-card-grid"></div>
                 </div>
 
-                <!-- TAB: RELEASES -->
                 <div id="tab-releases" class="tab-content">
                     <div class="tab-header">
                         <h3>ผลงานเพลง (Releases)</h3>
@@ -199,7 +225,6 @@
                     <div id="adminReleaseList" class="cms-card-grid"></div>
                 </div>
 
-                <!-- TAB: VIDEOS -->
                 <div id="tab-videos" class="tab-content">
                     <div class="tab-header">
                         <h3>วิดีโอ (Official Videos)</h3>
@@ -208,7 +233,6 @@
                     <div id="adminVideoList" class="cms-card-grid"></div>
                 </div>
 
-                <!-- TAB: MERCH -->
                 <div id="tab-merch" class="tab-content">
                     <div class="tab-header">
                         <h3>สินค้า Store (Merch)</h3>
@@ -217,7 +241,6 @@
                     <div id="adminMerchList" class="cms-card-grid"></div>
                 </div>
 
-                <!-- TAB: ABOUT -->
                 <div id="tab-about" class="tab-content">
                     <div class="tab-header">
                         <h3>เนื้อหา Our Culture (About)</h3>
@@ -235,10 +258,9 @@
                     </form>
                 </div>
 
-                <!-- TAB: BOOKINGS -->
                 <div id="tab-bookings" class="tab-content">
                     <div class="tab-header">
-                        <h3>รายการแจ้งจ้างงาน (Bookings)</h3>
+                        <h3>รายการแจ้งจ้างงาน / สั่งทำบีท (Bookings)</h3>
                     </div>
                     <div id="adminBookingList" class="booking-list-container"></div>
                 </div>
@@ -248,8 +270,6 @@
 
 
     <!-- ==================== MODALS ==================== -->
-    
-    <!-- 1. Password Auth Modal -->
     <div id="authModal" class="modal">
         <div class="modal-content text-center">
             <h3><i class="fa-solid fa-shield-halved text-gold icon-spacer"></i>Admin CMS Login</h3>
@@ -264,7 +284,6 @@
         </div>
     </div>
 
-    <!-- 2. Public Artist Profile Modal -->
     <div id="artistProfileModal" class="modal">
         <div class="modal-content artist-profile-modal">
             <button class="modal-close-btn" onclick="closeModal('artistProfileModal')">&times;</button>
@@ -272,7 +291,6 @@
         </div>
     </div>
 
-    <!-- 3. Form Modal: Artist -->
     <div id="artistFormModal" class="modal">
         <div class="modal-content">
             <button class="close-modal-btn" onclick="closeModal('artistFormModal')">&times;</button>
@@ -287,8 +305,6 @@
                     <label>แนวเพลง (Tags)</label>
                     <input type="text" id="artGenre" class="cms-input" placeholder="เช่น #TRAP #MELODIC">
                 </div>
-                
-                <!-- ImgBB Upload Widget -->
                 <div class="form-group">
                     <label>รูปภาพหลัก (Main Profile Image)</label>
                     <div class="imgbb-upload-container">
@@ -301,19 +317,16 @@
                     <div id="artUploadProgress" class="upload-progress">กำลังอัปโหลดรูปภาพไปยัง ImgBB...</div>
                     <img id="artImgPreview" class="img-preview" alt="Preview">
                 </div>
-
                 <div class="form-group">
                     <label>ประวัติศิลปิน (Biography)</label>
                     <textarea id="artBio" class="cms-textarea" rows="4" placeholder="รายละเอียดสไตล์เพลง..."></textarea>
                 </div>
-
                 <h4 class="form-section-title">เรทราคาการร่วมงาน (Rates)</h4>
                 <div class="form-row">
                     <div class="form-group"><label>Hook Rate</label><input type="text" id="rateHook" class="cms-input" placeholder="500 THB"></div>
                     <div class="form-group"><label>Verse Rate</label><input type="text" id="rateVerse" class="cms-input" placeholder="700 THB"></div>
                     <div class="form-group"><label>Verse + Hook</label><input type="text" id="rateBoth" class="cms-input" placeholder="1000 THB"></div>
                 </div>
-
                 <h4 class="form-section-title">Streaming & Social Links</h4>
                 <div class="form-row">
                     <div class="form-group"><label>Spotify URL</label><input type="text" id="artSpotify" class="cms-input" placeholder="https://open.spotify.com/..."></div>
@@ -324,13 +337,11 @@
                     <div class="form-group"><label>Instagram DM Link</label><input type="text" id="artIg" class="cms-input" placeholder="https://instagram.com/..."></div>
                     <div class="form-group"><label>TikTok Link</label><input type="text" id="artTiktok" class="cms-input" placeholder="https://tiktok.com/..."></div>
                 </div>
-
                 <h4 class="form-section-title">สื่อผลงาน (Media Embeds)</h4>
                 <div class="form-row">
                     <div class="form-group"><label>YouTube Embed Link</label><input type="text" id="artYtEmbed" class="cms-input" placeholder="https://www.youtube.com/embed/..."></div>
                     <div class="form-group"><label>SoundCloud Embed Link</label><input type="text" id="artScEmbed" class="cms-input" placeholder="https://w.soundcloud.com/player/..."></div>
                 </div>
-
                 <div class="form-actions">
                     <button type="button" class="btn btn-outline" onclick="closeModal('artistFormModal')">ยกเลิก</button>
                     <button type="submit" class="btn btn-gold">บันทึกศิลปิน</button>
@@ -339,7 +350,65 @@
         </div>
     </div>
 
-    <!-- 4. Form Modal: Event -->
+    <div id="producerFormModal" class="modal">
+        <div class="modal-content">
+            <button class="close-modal-btn" onclick="closeModal('producerFormModal')">&times;</button>
+            <h3 id="producerModalTitle">จัดการข้อมูลโปรดิวเซอร์</h3>
+            <form class="cms-form" onsubmit="saveProducerData(event)">
+                <input type="hidden" id="prodId">
+                <div class="form-group">
+                    <label>ชื่อคนกดบีท / โปรดิวเซอร์</label>
+                    <input type="text" id="prodName" class="cms-input" placeholder="เช่น NV BEATS" required>
+                </div>
+                <div class="form-group">
+                    <label>แนวบีท / สไตล์ (Tags)</label>
+                    <input type="text" id="prodGenre" class="cms-input" placeholder="เช่น #TRAP #BOOMBAP #DRILL #PLUGG">
+                </div>
+                <div class="form-group">
+                    <label>รูปภาพหลัก (Main Profile Image)</label>
+                    <div class="imgbb-upload-container">
+                        <input type="text" id="prodImage" class="cms-input" placeholder="วาง URL รูปภาพ หรือ อัปโหลด" required>
+                        <label class="btn btn-outline upload-btn">
+                            <i class="fa-solid fa-cloud-arrow-up icon-spacer"></i>ImgBB
+                            <input type="file" accept="image/*" onchange="uploadToImgBB(this, 'prodImage', 'prodImgPreview', 'prodUploadProgress')" hidden>
+                        </label>
+                    </div>
+                    <div id="prodUploadProgress" class="upload-progress">กำลังอัปโหลดรูปภาพไปยัง ImgBB...</div>
+                    <img id="prodImgPreview" class="img-preview" alt="Preview">
+                </div>
+                <div class="form-group">
+                    <label>ประวัติ / สไตล์การทำบีท (Biography)</label>
+                    <textarea id="prodBio" class="cms-textarea" rows="4" placeholder="รายละเอียดสไตล์บีท..."></textarea>
+                </div>
+                <h4 class="form-section-title">ราคากดบีท (Beat Rates)</h4>
+                <div class="form-row">
+                    <div class="form-group"><label>บีทเริ่มต้น (Standard Beat)</label><input type="text" id="rateProdStandard" class="cms-input" placeholder="1,500 THB"></div>
+                    <div class="form-group"><label>บีทสั่งตัด (Custom Beat)</label><input type="text" id="rateProdCustom" class="cms-input" placeholder="3,000 THB"></div>
+                    <div class="form-group"><label>ซื้อขาด (Exclusive Buyout)</label><input type="text" id="rateProdExclusive" class="cms-input" placeholder="6,000 THB"></div>
+                </div>
+                <h4 class="form-section-title">Streaming & Social Links</h4>
+                <div class="form-row">
+                    <div class="form-group"><label>Spotify URL</label><input type="text" id="prodSpotify" class="cms-input" placeholder="https://open.spotify.com/..."></div>
+                    <div class="form-group"><label>Apple Music URL</label><input type="text" id="prodApple" class="cms-input" placeholder="https://music.apple.com/..."></div>
+                    <div class="form-group"><label>YouTube URL</label><input type="text" id="prodYoutube" class="cms-input" placeholder="https://youtube.com/..."></div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group"><label>Instagram Link</label><input type="text" id="prodIg" class="cms-input" placeholder="https://instagram.com/..."></div>
+                    <div class="form-group"><label>TikTok Link</label><input type="text" id="prodTiktok" class="cms-input" placeholder="https://tiktok.com/..."></div>
+                </div>
+                <h4 class="form-section-title">ตัวอย่างบีท / ผลงาน (Beat Embeds)</h4>
+                <div class="form-row">
+                    <div class="form-group"><label>YouTube Embed Link</label><input type="text" id="prodYtEmbed" class="cms-input" placeholder="https://www.youtube.com/embed/..."></div>
+                    <div class="form-group"><label>SoundCloud Embed Link</label><input type="text" id="prodScEmbed" class="cms-input" placeholder="https://w.soundcloud.com/player/..."></div>
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="btn btn-outline" onclick="closeModal('producerFormModal')">ยกเลิก</button>
+                    <button type="submit" class="btn btn-gold">บันทึกโปรดิวเซอร์</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
     <div id="eventFormModal" class="modal">
         <div class="modal-content">
             <button class="close-modal-btn" onclick="closeModal('eventFormModal')">&times;</button>
@@ -394,7 +463,6 @@
         </div>
     </div>
 
-    <!-- 5. Form Modal: Release -->
     <div id="releaseFormModal" class="modal">
         <div class="modal-content">
             <button class="close-modal-btn" onclick="closeModal('releaseFormModal')">&times;</button>
@@ -433,7 +501,6 @@
         </div>
     </div>
 
-    <!-- 6. Form Modal: Video -->
     <div id="videoFormModal" class="modal">
         <div class="modal-content">
             <button class="close-modal-btn" onclick="closeModal('videoFormModal')">&times;</button>
@@ -463,7 +530,6 @@
         </div>
     </div>
 
-    <!-- 7. Form Modal: Merch -->
     <div id="merchFormModal" class="modal">
         <div class="modal-content">
             <button class="close-modal-btn" onclick="closeModal('merchFormModal')">&times;</button>

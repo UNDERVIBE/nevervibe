@@ -1,13 +1,9 @@
-// =========================================================
-// NEVERV!BE - WEB APP & ADMIN CMS SCRIPT (REALTIME DB + IMGBB)
-// =========================================================
-
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js";
 import { 
     getDatabase, ref, onValue, set, push, remove, update 
 } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-database.js";
 
-// --- 1. CONFIGURATION ---
+// Configuration
 const firebaseConfig = {
     apiKey: "AIzaSyDzhrO4lzLfxuZWGWQFMGunIfDfzth7ZWM",
     authDomain: "nevervibe-5e049.firebaseapp.com",
@@ -22,11 +18,10 @@ const firebaseConfig = {
 const IMGBB_API_KEY = "1a163cec2c80a29352d2ae9d9694a589";
 const ADMIN_PASSCODE = "nv2026";
 
-// Initialize Firebase Realtime Database
 const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
 
-// Initial Fallback Data
+// Initial Seed Data
 const initialMockData = {
     artists: [
         { id: "art1", name: "TRAPMEEN!", genre: "#TRAP #MELODIC #UNDERGROUND", image: "image/TRAPMEEN.jpg", bio: "New Wave underground สไตล์เพลงผสมผสาน Rnb, melodic Trap แบบสุดโต่ง เนื้อเพลงมีความลึกซึ้ง เข้าถึงอารมณ์", rates: { hook: "500 THB", verse: "700 THB", both: "1000 THB" }, streaming: { spotify: "https://open.spotify.com/artist/2g2JfhhP7pKGMkW3rHARfd", apple: "https://music.apple.com/us/artist/trapmeen/1792734768", youtube: "https://www.youtube.com/@Trapmeen999" }, socials: { ig: "https://www.instagram.com/_trapmeen/", tiktok: "https://www.tiktok.com/@_trapmeen" }, embeds: { youtube: "https://www.youtube.com/embed/0EZTTJre62o" } },
@@ -35,6 +30,9 @@ const initialMockData = {
         { id: "art4", name: "B$TN", genre: "#HIPHOP #TRAP #UNDERGROUND", image: "image/B$TN.jpg", bio: "แร็ปเปอร์ผู้มาพร้อมโฟลว์สุดเดือดและเนื้อหาที่เข้มข้น ดุดัน หนึ่งในแกนนำความเดือดจาก NEVERV!BE", rates: { hook: "700 THB", verse: "1,400 THB", both: "2,000 THB" }, streaming: { spotify: "https://open.spotify.com/artist/40xlgc3WbxMn3740qpxWwr", apple: "https://music.apple.com/us/artist/b%24tn/1797964381", youtube: "https://www.youtube.com/@bstn223" }, socials: { ig: "https://www.instagram.com/chuen.arom/" }, embeds: { youtube: "https://www.youtube.com/embed/DCzdwjOfl1A" } },
         { id: "art5", name: "T4NN", genre: "#TRAP #RAP #UNDERGROUND", image: "image/T4NN.jpg", bio: "ทรงพลัง ดุดัน และตรงไปตรงมา เขาคือแร็ปเปอร์ที่เปี่ยมไปด้วยสกิล Rhyme อันเฉียบคม", rates: { hook: "500 THB", verse: "700 THB", both: "1,000 THB" }, streaming: { spotify: "https://open.spotify.com/artist/0gIFDvCovFx0Ai2VMsOABh", apple: "https://music.apple.com/us/artist/t4nn/1793896012", youtube: "https://www.youtube.com/@Yungtann444" }, socials: { ig: "https://www.instagram.com/_tannstfu/" }, embeds: { youtube: "https://www.youtube.com/embed/DibJiyysPyo" } },
         { id: "art6", name: "AKITO†", genre: "#TRAP #DRILL #UNDERGROUND", image: "image/AKITO.jpg", bio: "สัญลักษณ์ของความดุดันและมืดหม่น ศิลปินสายแข็งจาก NEVERV!BE ที่ฉีกทุกกฎของวงการ", rates: { hook: "700 THB", verse: "700 THB", both: "1,000 THB" }, streaming: { spotify: "https://open.spotify.com/artist/3PwkpdK9tYv3R54A1a7k4M", apple: "https://music.apple.com/us/album/you-know-feat-jayq-single/1883758673", youtube: "https://www.youtube.com/@akitogoboytrap" }, socials: { ig: "https://www.instagram.com/akitogoboy/" }, embeds: { youtube: "https://www.youtube.com/embed/9aPaEKfOGhU" } }
+    ],
+    producers: [
+        { id: "prod1", name: "NV BEATS", genre: "#TRAP #BOOMBAP #DRILL #PLUGG", image: "image/logo.png", bio: "โปรดิวเซอร์และคนกดบีทหลักประจำค่าย NEVERV!BE เชี่ยวชาญการทำบีทหลากหลายสไตล์ทั้ง Trap, Drill, Plugg และ Boom Bap พร้อม Mixing & Mastering", rates: { standard: "1,500 THB", custom: "3,000 THB", exclusive: "6,000 THB" }, streaming: { youtube: "https://www.youtube.com/@NEVERVIBE2025" }, socials: { ig: "https://www.instagram.com/nevervibe.th/" }, embeds: { youtube: "https://www.youtube.com/embed/-kWiWynPOeY" } }
     ],
     events: [
         { id: "ev1", title: "Source.wav vol3", date: "24 พฤษภาคม 2026, 19:00", location: "Redhotmoon Livehouse", artists: "Line up: AKITO, TRAPMEEN!, N4, T4NN", poster: "image/event1.jpg", status: "Get Tickets", url: "https://www.ticketmelon.com/th/sourcewavteam/Sourcewavvol3" }
@@ -57,29 +55,44 @@ const initialMockData = {
     bookings: []
 };
 
-// Global Store
 let store = JSON.parse(JSON.stringify(initialMockData));
 
-// --- 2. FIREBASE REALTIME DB SYNC WITH SEEDING ---
+// --- NAVIGATION MOBILE ---
+window.toggleMobileNav = function() {
+    const navLinks = document.getElementById('navLinks');
+    const toggleIcon = document.querySelector('#navToggle i');
+    if (navLinks) {
+        navLinks.classList.toggle('active');
+        if (toggleIcon) {
+            toggleIcon.className = navLinks.classList.contains('active') ? 'fa-solid fa-xmark' : 'fa-solid fa-bars';
+        }
+    }
+};
+
+window.closeMobileNav = function() {
+    const navLinks = document.getElementById('navLinks');
+    const toggleIcon = document.querySelector('#navToggle i');
+    if (navLinks && navLinks.classList.contains('active')) {
+        navLinks.classList.remove('active');
+        if (toggleIcon) toggleIcon.className = 'fa-solid fa-bars';
+    }
+};
+
+// --- FIREBASE SYNC ---
 function initFirebaseSync() {
-    const collections = ['artists', 'events', 'releases', 'videos', 'merch', 'bookings'];
+    const collections = ['artists', 'producers', 'events', 'releases', 'videos', 'merch', 'bookings'];
     
     collections.forEach(colName => {
         const dbRef = ref(db, colName);
         onValue(dbRef, (snapshot) => {
             const data = snapshot.val();
             if (data) {
-                store[colName] = Object.keys(data).map(key => ({
-                    id: key,
-                    ...data[key]
-                }));
+                store[colName] = Object.keys(data).map(key => ({ id: key, ...data[key] }));
             } else {
-                // If cloud database is empty for this node, seed default initial data
                 if (initialMockData[colName] && initialMockData[colName].length > 0) {
                     store[colName] = [...initialMockData[colName]];
                     initialMockData[colName].forEach(item => {
-                        const newRef = ref(db, `${colName}/${item.id}`);
-                        set(newRef, item);
+                        set(ref(db, `${colName}/${item.id}`), item);
                     });
                 } else {
                     store[colName] = [];
@@ -88,7 +101,6 @@ function initFirebaseSync() {
             renderPublicSite();
             renderAdminPanel();
         }, (error) => {
-            console.warn(`Realtime DB path [${colName}] using local state fallback:`, error);
             renderPublicSite();
             renderAdminPanel();
         });
@@ -96,19 +108,15 @@ function initFirebaseSync() {
 
     onValue(ref(db, "settings/about"), (snapshot) => {
         const data = snapshot.val();
-        if (data) {
-            store.about = data;
-        } else {
-            set(ref(db, "settings/about"), initialMockData.about);
-        }
+        if (data) store.about = data;
+        else set(ref(db, "settings/about"), initialMockData.about);
         renderPublicSite();
         renderAdminPanel();
     });
 }
 
-// --- 3. PUBLIC SITE RENDERING ---
+// --- PUBLIC RENDERING ---
 function renderPublicSite() {
-    // Render Artists
     const artistContainer = document.getElementById('artistContainer');
     if (artistContainer) {
         artistContainer.innerHTML = store.artists.length ? store.artists.map(art => `
@@ -119,7 +127,16 @@ function renderPublicSite() {
         `).join('') : '<div class="loading-state">ยังไม่มีข้อมูลศิลปิน</div>';
     }
 
-    // Render Events
+    const producerContainer = document.getElementById('producerContainer');
+    if (producerContainer) {
+        producerContainer.innerHTML = store.producers && store.producers.length ? store.producers.map(prod => `
+            <div class="artist-card" onclick="openProducerProfile('${prod.id}')">
+                <img src="${prod.image || 'https://via.placeholder.com/300x400/111/fff?text=NV+Producer'}" alt="${prod.name}">
+                <div class="artist-name">${prod.name}</div>
+            </div>
+        `).join('') : '<div class="loading-state">ยังไม่มีข้อมูลโปรดิวเซอร์</div>';
+    }
+
     const eventContainer = document.getElementById('eventContainer');
     if (eventContainer) {
         eventContainer.innerHTML = store.events.length ? store.events.map(ev => `
@@ -138,7 +155,6 @@ function renderPublicSite() {
         `).join('') : '<div class="loading-state">ยังไม่มีตารางงานแสดง</div>';
     }
 
-    // Render Releases
     const releaseContainer = document.getElementById('releaseContainer');
     if (releaseContainer) {
         releaseContainer.innerHTML = store.releases.length ? store.releases.map(rel => `
@@ -152,7 +168,6 @@ function renderPublicSite() {
         `).join('') : '<div class="loading-state">ยังไม่มีผลงานเพลง</div>';
     }
 
-    // Render Videos
     const videoContainer = document.getElementById('videoContainer');
     if (videoContainer) {
         videoContainer.innerHTML = store.videos.length ? store.videos.map(vid => `
@@ -167,7 +182,6 @@ function renderPublicSite() {
         `).join('') : '<div class="loading-state">ยังไม่มีวิดีโอ</div>';
     }
 
-    // Render Merch
     const merchContainer = document.getElementById('merchContainer');
     if (merchContainer) {
         merchContainer.innerHTML = store.merch.length ? store.merch.map(mch => `
@@ -182,7 +196,6 @@ function renderPublicSite() {
         `).join('') : '<div class="loading-state">ยังไม่มีสินค้าในร้านค้า</div>';
     }
 
-    // Render About
     const aboutContent = document.getElementById('aboutContent');
     if (aboutContent && store.about) {
         aboutContent.innerHTML = `
@@ -192,7 +205,7 @@ function renderPublicSite() {
     }
 }
 
-// --- 4. PUBLIC ARTIST PROFILE MODAL ---
+// --- PUBLIC PROFILES MODAL ---
 window.openArtistProfile = function(id) {
     const art = store.artists.find(a => a.id === id);
     if (!art) return;
@@ -244,15 +257,63 @@ window.openArtistProfile = function(id) {
     const modal = document.getElementById('artistProfileModal');
     document.getElementById('artistProfileDetail').innerHTML = detailHtml;
     modal.style.display = 'flex';
-
-    modal.onclick = function(event) {
-        if (event.target === modal) {
-            closeModal('artistProfileModal');
-        }
-    };
+    modal.onclick = function(event) { if (event.target === modal) closeModal('artistProfileModal'); };
 };
 
-// Handle Booking Form Submit
+window.openProducerProfile = function(id) {
+    const prod = store.producers ? store.producers.find(p => p.id === id) : null;
+    if (!prod) return;
+
+    const detailHtml = `
+        <div style="position: relative; height: 260px;">
+            <img src="${prod.image}" style="width: 100%; height: 100%; object-fit: cover; filter: brightness(0.65);">
+            <div style="position: absolute; bottom: 20px; left: 25px; right: 25px; z-index: 2;">
+                <div class="genre-tags" style="color: #FFD700; font-weight: 800; font-size: 0.75rem; letter-spacing: 1.5px;">${prod.genre || ''}</div>
+                <h1 style="font-size: 2.4rem; margin: 4px 0 0; color: #fff; text-align: left; text-shadow: 0 4px 10px rgba(0,0,0,0.8);">${prod.name}</h1>
+            </div>
+        </div>
+        <div style="padding: 25px 25px 40px;">
+            <h3 style="color: #FFD700; border-bottom: 1px solid rgba(255,215,0,0.2); padding-bottom: 8px; margin-top: 0; font-size: 1.1rem;">PRODUCER PROFILE & SOUNDS</h3>
+            <p style="color: #ccc; line-height: 1.7; font-size: 0.95rem;">${prod.bio || 'ยังไม่มีข้อมูลประวัติ'}</p>
+
+            ${prod.rates ? `
+                <h3 style="color: #FFD700; border-bottom: 1px solid rgba(255,215,0,0.2); padding-bottom: 8px; margin-top: 30px; font-size: 1.1rem;">BEAT RATES (ราคากดบีท)</h3>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 12px; margin-top: 15px;">
+                    <div style="background: #181818; padding: 15px; border-radius: 8px; text-align: center; border: 1px solid rgba(255,255,255,0.05);">
+                        <span style="color: #888; font-size: 0.75rem; font-weight: 700;">STANDARD BEAT</span>
+                        <div style="color: #fff; font-weight: 900; font-size: 1.15rem; margin-top: 4px;">${prod.rates.standard || '-'}</div>
+                    </div>
+                    <div style="background: #181818; padding: 15px; border-radius: 8px; text-align: center; border: 1px solid rgba(255,255,255,0.05);">
+                        <span style="color: #888; font-size: 0.75rem; font-weight: 700;">CUSTOM BEAT</span>
+                        <div style="color: #fff; font-weight: 900; font-size: 1.15rem; margin-top: 4px;">${prod.rates.custom || '-'}</div>
+                    </div>
+                    <div style="background: #181818; border: 1px solid #FFD700; padding: 15px; border-radius: 8px; text-align: center;">
+                        <span style="color: #FFD700; font-size: 0.75rem; font-weight: 700;">EXCLUSIVE RATE</span>
+                        <div style="color: #fff; font-weight: 900; font-size: 1.15rem; margin-top: 4px;">${prod.rates.exclusive || '-'}</div>
+                    </div>
+                </div>
+            ` : ''}
+
+            ${prod.embeds && prod.embeds.youtube ? `
+                <h3 style="color: #FFD700; border-bottom: 1px solid rgba(255,215,0,0.2); padding-bottom: 8px; margin-top: 30px; font-size: 1.1rem;">DEMO BEAT / WORK</h3>
+                <div style="margin-top: 15px; border-radius: 8px; overflow: hidden; background: #000;">
+                    <iframe width="100%" height="240" src="${prod.embeds.youtube}" frameborder="0" allowfullscreen></iframe>
+                </div>
+            ` : ''}
+
+            <div style="display: flex; gap: 12px; margin-top: 35px; justify-content: center; flex-wrap: wrap;">
+                ${prod.socials && prod.socials.ig ? `<a href="${prod.socials.ig}" target="_blank" class="btn btn-gold" style="padding: 12px 20px; font-size: 0.85rem;"><i class="fab fa-instagram icon-spacer"></i>DM FOR BEATS</a>` : ''}
+                ${prod.streaming && prod.streaming.youtube ? `<a href="${prod.streaming.youtube}" target="_blank" class="btn btn-outline" style="padding: 12px 20px; font-size: 0.85rem;"><i class="fab fa-youtube icon-spacer"></i>YOUTUBE BEATS</a>` : ''}
+            </div>
+        </div>
+    `;
+
+    const modal = document.getElementById('artistProfileModal');
+    document.getElementById('artistProfileDetail').innerHTML = detailHtml;
+    modal.style.display = 'flex';
+    modal.onclick = function(event) { if (event.target === modal) closeModal('artistProfileModal'); };
+};
+
 window.handlePublicBooking = async function(e) {
     e.preventDefault();
     const data = {
@@ -271,20 +332,16 @@ window.handlePublicBooking = async function(e) {
         store.bookings.push({ id: Date.now().toString(), ...data });
     }
 
-    alert('ส่งข้อมูลการจ้างงานเรียบร้อยแล้ว! ทีมงาน NEVERV!BE จะติดต่อกลับโดยเร็วที่สุดครับ');
+    alert('ส่งข้อมูลการจ้างงาน/สั่งทำบีทเรียบร้อยแล้ว! ทีมงาน NEVERV!BE จะติดต่อกลับโดยเร็วที่สุดครับ');
     document.getElementById('bookingForm').reset();
 };
 
-
-// --- 5. ADMIN CMS RENDERING & CRUD ---
-window.openAuthModal = function() {
-    document.getElementById('authModal').style.display = 'flex';
-};
+// --- ADMIN CMS ACTIONS ---
+window.openAuthModal = function() { document.getElementById('authModal').style.display = 'flex'; };
 
 window.verifyAdminPassword = function(e) {
     e.preventDefault();
-    const pass = document.getElementById('adminPasscode').value;
-    if (pass === ADMIN_PASSCODE) {
+    if (document.getElementById('adminPasscode').value === ADMIN_PASSCODE) {
         closeModal('authModal');
         document.getElementById('publicSite').style.display = 'none';
         document.getElementById('adminPanel').style.display = 'block';
@@ -307,20 +364,15 @@ window.logoutAdmin = function() {
 window.switchTab = function(tabName, btnElement) {
     document.querySelectorAll('.admin-tab').forEach(b => b.classList.remove('active'));
     document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
-    
     if (btnElement) btnElement.classList.add('active');
     document.getElementById(`tab-${tabName}`).classList.add('active');
 };
 
 function renderAdminPanel() {
-    // Admin Artists
     document.getElementById('adminArtistList').innerHTML = store.artists.map(art => `
         <div class="cms-card">
             <img src="${art.image}">
-            <div class="cms-card-body">
-                <h4>${art.name}</h4>
-                <p>${art.genre || ''}</p>
-            </div>
+            <div class="cms-card-body"><h4>${art.name}</h4><p>${art.genre || ''}</p></div>
             <div class="cms-card-actions">
                 <button class="btn btn-outline" onclick="editArtist('${art.id}')"><i class="fa-solid fa-pen icon-spacer"></i>แก้ไข</button>
                 <button class="btn btn-danger" onclick="deleteItem('artists', '${art.id}')"><i class="fa-solid fa-trash"></i></button>
@@ -328,14 +380,24 @@ function renderAdminPanel() {
         </div>
     `).join('');
 
-    // Admin Events
+    const adminProdList = document.getElementById('adminProducerList');
+    if (adminProdList) {
+        adminProdList.innerHTML = store.producers ? store.producers.map(prod => `
+            <div class="cms-card">
+                <img src="${prod.image}">
+                <div class="cms-card-body"><h4>${prod.name}</h4><p>${prod.genre || ''}</p></div>
+                <div class="cms-card-actions">
+                    <button class="btn btn-outline" onclick="editProducer('${prod.id}')"><i class="fa-solid fa-pen icon-spacer"></i>แก้ไข</button>
+                    <button class="btn btn-danger" onclick="deleteItem('producers', '${prod.id}')"><i class="fa-solid fa-trash"></i></button>
+                </div>
+            </div>
+        `).join('') : '<p style="color: #888;">ยังไม่มีข้อมูลโปรดิวเซอร์</p>';
+    }
+
     document.getElementById('adminEventList').innerHTML = store.events.map(ev => `
         <div class="cms-card">
             <img src="${ev.poster}">
-            <div class="cms-card-body">
-                <h4>${ev.title}</h4>
-                <p>${ev.date} @ ${ev.location}</p>
-            </div>
+            <div class="cms-card-body"><h4>${ev.title}</h4><p>${ev.date} @ ${ev.location}</p></div>
             <div class="cms-card-actions">
                 <button class="btn btn-outline" onclick="editEvent('${ev.id}')"><i class="fa-solid fa-pen icon-spacer"></i>แก้ไข</button>
                 <button class="btn btn-danger" onclick="deleteItem('events', '${ev.id}')"><i class="fa-solid fa-trash"></i></button>
@@ -343,14 +405,10 @@ function renderAdminPanel() {
         </div>
     `).join('');
 
-    // Admin Releases
     document.getElementById('adminReleaseList').innerHTML = store.releases.map(rel => `
         <div class="cms-card">
             <img src="${rel.cover}">
-            <div class="cms-card-body">
-                <h4>${rel.title}</h4>
-                <p>By ${rel.artist}</p>
-            </div>
+            <div class="cms-card-body"><h4>${rel.title}</h4><p>By ${rel.artist}</p></div>
             <div class="cms-card-actions">
                 <button class="btn btn-outline" onclick="editRelease('${rel.id}')"><i class="fa-solid fa-pen icon-spacer"></i>แก้ไข</button>
                 <button class="btn btn-danger" onclick="deleteItem('releases', '${rel.id}')"><i class="fa-solid fa-trash"></i></button>
@@ -358,16 +416,12 @@ function renderAdminPanel() {
         </div>
     `).join('');
 
-    // Admin Videos
     document.getElementById('adminVideoList').innerHTML = store.videos.map(vid => `
         <div class="cms-card">
             <div style="background: #000; height: 120px; display: flex; align-items: center; justify-content: center; color: #FFD700;">
                 <i class="fa-solid fa-play fa-2x"></i>
             </div>
-            <div class="cms-card-body">
-                <h4>${vid.title}</h4>
-                <p>Type: ${vid.type ? vid.type.toUpperCase() : 'IG'}</p>
-            </div>
+            <div class="cms-card-body"><h4>${vid.title}</h4><p>Type: ${vid.type ? vid.type.toUpperCase() : 'IG'}</p></div>
             <div class="cms-card-actions">
                 <button class="btn btn-outline" onclick="editVideo('${vid.id}')"><i class="fa-solid fa-pen icon-spacer"></i>แก้ไข</button>
                 <button class="btn btn-danger" onclick="deleteItem('videos', '${vid.id}')"><i class="fa-solid fa-trash"></i></button>
@@ -375,14 +429,10 @@ function renderAdminPanel() {
         </div>
     `).join('');
 
-    // Admin Merch
     document.getElementById('adminMerchList').innerHTML = store.merch.map(mch => `
         <div class="cms-card">
             <img src="${mch.image}">
-            <div class="cms-card-body">
-                <h4>${mch.name}</h4>
-                <p style="color: #FFD700;">${mch.price}</p>
-            </div>
+            <div class="cms-card-body"><h4>${mch.name}</h4><p style="color: #FFD700;">${mch.price}</p></div>
             <div class="cms-card-actions">
                 <button class="btn btn-outline" onclick="editMerch('${mch.id}')"><i class="fa-solid fa-pen icon-spacer"></i>แก้ไข</button>
                 <button class="btn btn-danger" onclick="deleteItem('merch', '${mch.id}')"><i class="fa-solid fa-trash"></i></button>
@@ -390,17 +440,15 @@ function renderAdminPanel() {
         </div>
     `).join('');
 
-    // Admin About Form
     if (store.about) {
         document.getElementById('editAboutHighlight').value = store.about.highlight || '';
         document.getElementById('editAboutText').value = store.about.text || '';
     }
 
-    // Admin Bookings List
     document.getElementById('adminBookingList').innerHTML = store.bookings.length ? store.bookings.map(bk => `
         <div class="booking-item-card">
             <div class="booking-item-header">
-                <h4>${bk.name} (ศิลปิน: ${bk.artist})</h4>
+                <h4>${bk.name} (เลือก: ${bk.artist})</h4>
                 <span>วันที่ต้องการ: ${bk.date}</span>
             </div>
             <p><strong>Email:</strong> <a href="mailto:${bk.email}" style="color: #FFD700;">${bk.email}</a></p>
@@ -409,11 +457,10 @@ function renderAdminPanel() {
                 <button class="btn btn-danger" onclick="deleteItem('bookings', '${bk.id}')"><i class="fa-solid fa-trash icon-spacer"></i>ลบรายการ</button>
             </div>
         </div>
-    `).join('') : '<p style="color: #888;">ยังไม่มีรายการแจ้งจ้างงาน</p>';
+    `).join('') : '<p style="color: #888;">ยังไม่มีรายการแจ้งจ้างงาน/สั่งทำบีท</p>';
 }
 
-
-// --- 6. IMGBB DIRECT UPLOAD API ---
+// --- IMGBB UPLOAD ---
 window.uploadToImgBB = async function(fileInput, targetUrlId, targetPreviewId, progressId) {
     const file = fileInput.files[0];
     if (!file) return;
@@ -425,24 +472,17 @@ window.uploadToImgBB = async function(fileInput, targetUrlId, targetPreviewId, p
     formData.append("image", file);
 
     try {
-        const res = await fetch(`https://api.imgbb.com/1/upload?key=${IMGBB_API_KEY}`, {
-            method: "POST",
-            body: formData
-        });
+        const res = await fetch(`https://api.imgbb.com/1/upload?key=${IMGBB_API_KEY}`, { method: "POST", body: formData });
         const data = await res.json();
 
         if (data.success) {
             const imageUrl = data.data.url;
             document.getElementById(targetUrlId).value = imageUrl;
-
             const previewEl = document.getElementById(targetPreviewId);
-            if (previewEl) {
-                previewEl.src = imageUrl;
-                previewEl.style.display = 'block';
-            }
+            if (previewEl) { previewEl.src = imageUrl; previewEl.style.display = 'block'; }
             alert('อัปโหลดรูปภาพไปยัง ImgBB สำเร็จ!');
         } else {
-            alert('เกิดข้อผิดพลาดในการอัปโหลดรูปภาพ: ' + (data.error ? data.error.message : 'Unknown error'));
+            alert('เกิดข้อผิดพลาดในการอัปโหลดรูปภาพ');
         }
     } catch (err) {
         alert('อัปโหลดล้มเหลว กรุณาตรวจสอบการเชื่อมต่ออินเทอร์เน็ต');
@@ -451,13 +491,9 @@ window.uploadToImgBB = async function(fileInput, targetUrlId, targetPreviewId, p
     }
 };
 
+window.closeModal = function(modalId) { document.getElementById(modalId).style.display = 'none'; };
 
-// --- 7. MODAL HELPERS & FORM SUBMISSIONS ---
-window.closeModal = function(modalId) {
-    document.getElementById(modalId).style.display = 'none';
-};
-
-// ARTIST MODAL ACTIONS
+// --- ARTIST MODAL ---
 window.openArtistModal = function() {
     document.getElementById('artId').value = '';
     document.getElementById('artName').value = '';
@@ -475,7 +511,6 @@ window.openArtistModal = function() {
     document.getElementById('artYtEmbed').value = '';
     document.getElementById('artScEmbed').value = '';
     document.getElementById('artImgPreview').style.display = 'none';
-    
     document.getElementById('artistModalTitle').innerText = 'เพิ่มศิลปินใหม่';
     document.getElementById('artistFormModal').style.display = 'flex';
 };
@@ -517,42 +552,17 @@ window.saveArtistData = async function(e) {
         genre: document.getElementById('artGenre').value,
         image: document.getElementById('artImage').value,
         bio: document.getElementById('artBio').value,
-        rates: {
-            hook: document.getElementById('rateHook').value,
-            verse: document.getElementById('rateVerse').value,
-            both: document.getElementById('rateBoth').value
-        },
-        streaming: {
-            spotify: document.getElementById('artSpotify').value,
-            apple: document.getElementById('artApple').value,
-            youtube: document.getElementById('artYoutube').value
-        },
-        socials: {
-            ig: document.getElementById('artIg').value,
-            tiktok: document.getElementById('artTiktok').value
-        },
-        embeds: {
-            youtube: document.getElementById('artYtEmbed').value,
-            soundcloud: document.getElementById('artScEmbed').value
-        }
+        rates: { hook: document.getElementById('rateHook').value, verse: document.getElementById('rateVerse').value, both: document.getElementById('rateBoth').value },
+        streaming: { spotify: document.getElementById('artSpotify').value, apple: document.getElementById('artApple').value, youtube: document.getElementById('artYoutube').value },
+        socials: { ig: document.getElementById('artIg').value, tiktok: document.getElementById('artTiktok').value },
+        embeds: { youtube: document.getElementById('artYtEmbed').value, soundcloud: document.getElementById('artScEmbed').value }
     };
 
     if (id) {
         data.id = id;
-        try { await update(ref(db, `artists/${id}`), data); }
-        catch (err) {
-            const idx = store.artists.findIndex(a => a.id === id);
-            if (idx !== -1) store.artists[idx] = data;
-        }
+        try { await update(ref(db, `artists/${id}`), data); } catch (err) { const idx = store.artists.findIndex(a => a.id === id); if (idx !== -1) store.artists[idx] = data; }
     } else {
-        try {
-            const newRef = push(ref(db, "artists"));
-            data.id = newRef.key;
-            await set(newRef, data);
-        } catch (err) { 
-            const newId = Date.now().toString();
-            store.artists.push({ id: newId, ...data }); 
-        }
+        try { const newRef = push(ref(db, "artists")); data.id = newRef.key; await set(newRef, data); } catch (err) { store.artists.push({ id: Date.now().toString(), ...data }); }
     }
 
     closeModal('artistFormModal');
@@ -560,7 +570,85 @@ window.saveArtistData = async function(e) {
     renderAdminPanel();
 };
 
-// EVENT MODAL ACTIONS
+// --- PRODUCER MODAL ---
+window.openProducerModal = function() {
+    document.getElementById('prodId').value = '';
+    document.getElementById('prodName').value = '';
+    document.getElementById('prodGenre').value = '';
+    document.getElementById('prodImage').value = '';
+    document.getElementById('prodBio').value = '';
+    document.getElementById('rateProdStandard').value = '';
+    document.getElementById('rateProdCustom').value = '';
+    document.getElementById('rateProdExclusive').value = '';
+    document.getElementById('prodSpotify').value = '';
+    document.getElementById('prodApple').value = '';
+    document.getElementById('prodYoutube').value = '';
+    document.getElementById('prodIg').value = '';
+    document.getElementById('prodTiktok').value = '';
+    document.getElementById('prodYtEmbed').value = '';
+    document.getElementById('prodScEmbed').value = '';
+    document.getElementById('prodImgPreview').style.display = 'none';
+    document.getElementById('producerModalTitle').innerText = 'เพิ่มคนกดบีท/โปรดิวเซอร์ใหม่';
+    document.getElementById('producerFormModal').style.display = 'flex';
+};
+
+window.editProducer = function(id) {
+    if (!store.producers) return;
+    const prod = store.producers.find(p => p.id === id);
+    if (!prod) return;
+
+    document.getElementById('prodId').value = prod.id;
+    document.getElementById('prodName').value = prod.name || '';
+    document.getElementById('prodGenre').value = prod.genre || '';
+    document.getElementById('prodImage').value = prod.image || '';
+    document.getElementById('prodBio').value = prod.bio || '';
+    document.getElementById('rateProdStandard').value = prod.rates ? prod.rates.standard || '' : '';
+    document.getElementById('rateProdCustom').value = prod.rates ? prod.rates.custom || '' : '';
+    document.getElementById('rateProdExclusive').value = prod.rates ? prod.rates.exclusive || '' : '';
+    document.getElementById('prodSpotify').value = prod.streaming ? prod.streaming.spotify || '' : '';
+    document.getElementById('prodApple').value = prod.streaming ? prod.streaming.apple || '' : '';
+    document.getElementById('prodYoutube').value = prod.streaming ? prod.streaming.youtube || '' : '';
+    document.getElementById('prodIg').value = prod.socials ? prod.socials.ig || '' : '';
+    document.getElementById('prodTiktok').value = prod.socials ? prod.socials.tiktok || '' : '';
+    document.getElementById('prodYtEmbed').value = prod.embeds ? prod.embeds.youtube || '' : '';
+    document.getElementById('prodScEmbed').value = prod.embeds ? prod.embeds.soundcloud || '' : '';
+
+    if (prod.image) {
+        document.getElementById('prodImgPreview').src = prod.image;
+        document.getElementById('prodImgPreview').style.display = 'block';
+    }
+
+    document.getElementById('producerModalTitle').innerText = 'แก้ไขข้อมูลโปรดิวเซอร์';
+    document.getElementById('producerFormModal').style.display = 'flex';
+};
+
+window.saveProducerData = async function(e) {
+    e.preventDefault();
+    const id = document.getElementById('prodId').value;
+    const data = {
+        name: document.getElementById('prodName').value,
+        genre: document.getElementById('prodGenre').value,
+        image: document.getElementById('prodImage').value,
+        bio: document.getElementById('prodBio').value,
+        rates: { standard: document.getElementById('rateProdStandard').value, custom: document.getElementById('rateProdCustom').value, exclusive: document.getElementById('rateProdExclusive').value },
+        streaming: { spotify: document.getElementById('prodSpotify').value, apple: document.getElementById('prodApple').value, youtube: document.getElementById('prodYoutube').value },
+        socials: { ig: document.getElementById('prodIg').value, tiktok: document.getElementById('prodTiktok').value },
+        embeds: { youtube: document.getElementById('prodYtEmbed').value, soundcloud: document.getElementById('prodScEmbed').value }
+    };
+
+    if (id) {
+        data.id = id;
+        try { await update(ref(db, `producers/${id}`), data); } catch (err) { const idx = store.producers.findIndex(p => p.id === id); if (idx !== -1) store.producers[idx] = data; }
+    } else {
+        try { const newRef = push(ref(db, "producers")); data.id = newRef.key; await set(newRef, data); } catch (err) { if (!store.producers) store.producers = []; store.producers.push({ id: Date.now().toString(), ...data }); }
+    }
+
+    closeModal('producerFormModal');
+    renderPublicSite();
+    renderAdminPanel();
+};
+
+// --- EVENT MODAL ---
 window.openEventModal = function() {
     document.getElementById('evId').value = '';
     document.getElementById('evTitle').value = '';
@@ -571,7 +659,6 @@ window.openEventModal = function() {
     document.getElementById('evStatus').value = 'Get Tickets';
     document.getElementById('evUrl').value = '';
     document.getElementById('evPosterPreview').style.display = 'none';
-
     document.getElementById('eventModalTitle').innerText = 'เพิ่ม Event ใหม่';
     document.getElementById('eventFormModal').style.display = 'flex';
 };
@@ -579,7 +666,6 @@ window.openEventModal = function() {
 window.editEvent = function(id) {
     const ev = store.events.find(e => e.id === id);
     if (!ev) return;
-
     document.getElementById('evId').value = ev.id;
     document.getElementById('evTitle').value = ev.title || '';
     document.getElementById('evDate').value = ev.date || '';
@@ -588,12 +674,7 @@ window.editEvent = function(id) {
     document.getElementById('evPoster').value = ev.poster || '';
     document.getElementById('evStatus').value = ev.status || 'Get Tickets';
     document.getElementById('evUrl').value = ev.url || '';
-
-    if (ev.poster) {
-        document.getElementById('evPosterPreview').src = ev.poster;
-        document.getElementById('evPosterPreview').style.display = 'block';
-    }
-
+    if (ev.poster) { document.getElementById('evPosterPreview').src = ev.poster; document.getElementById('evPosterPreview').style.display = 'block'; }
     document.getElementById('eventModalTitle').innerText = 'แก้ไขข้อมูล Event';
     document.getElementById('eventFormModal').style.display = 'flex';
 };
@@ -601,40 +682,13 @@ window.editEvent = function(id) {
 window.saveEventData = async function(e) {
     e.preventDefault();
     const id = document.getElementById('evId').value;
-    const data = {
-        title: document.getElementById('evTitle').value,
-        date: document.getElementById('evDate').value,
-        location: document.getElementById('evLocation').value,
-        artists: document.getElementById('evArtists').value,
-        poster: document.getElementById('evPoster').value,
-        status: document.getElementById('evStatus').value,
-        url: document.getElementById('evUrl').value
-    };
-
-    if (id) {
-        data.id = id;
-        try { await update(ref(db, `events/${id}`), data); }
-        catch (err) {
-            const idx = store.events.findIndex(e => e.id === id);
-            if (idx !== -1) store.events[idx] = data;
-        }
-    } else {
-        try {
-            const newRef = push(ref(db, "events"));
-            data.id = newRef.key;
-            await set(newRef, data);
-        } catch (err) { 
-            const newId = Date.now().toString();
-            store.events.push({ id: newId, ...data }); 
-        }
-    }
-
-    closeModal('eventFormModal');
-    renderPublicSite();
-    renderAdminPanel();
+    const data = { title: document.getElementById('evTitle').value, date: document.getElementById('evDate').value, location: document.getElementById('evLocation').value, artists: document.getElementById('evArtists').value, poster: document.getElementById('evPoster').value, status: document.getElementById('evStatus').value, url: document.getElementById('evUrl').value };
+    if (id) { data.id = id; try { await update(ref(db, `events/${id}`), data); } catch (err) { const idx = store.events.findIndex(e => e.id === id); if (idx !== -1) store.events[idx] = data; } }
+    else { try { const newRef = push(ref(db, "events")); data.id = newRef.key; await set(newRef, data); } catch (err) { store.events.push({ id: Date.now().toString(), ...data }); } }
+    closeModal('eventFormModal'); renderPublicSite(); renderAdminPanel();
 };
 
-// RELEASE MODAL ACTIONS
+// --- RELEASE MODAL ---
 window.openReleaseModal = function() {
     document.getElementById('relId').value = '';
     document.getElementById('relTitle').value = '';
@@ -642,7 +696,6 @@ window.openReleaseModal = function() {
     document.getElementById('relCover').value = '';
     document.getElementById('relUrl').value = '';
     document.getElementById('relCoverPreview').style.display = 'none';
-
     document.getElementById('releaseModalTitle').innerText = 'เพิ่ม Release ใหม่';
     document.getElementById('releaseFormModal').style.display = 'flex';
 };
@@ -650,18 +703,12 @@ window.openReleaseModal = function() {
 window.editRelease = function(id) {
     const rel = store.releases.find(r => r.id === id);
     if (!rel) return;
-
     document.getElementById('relId').value = rel.id;
     document.getElementById('relTitle').value = rel.title || '';
     document.getElementById('relArtist').value = rel.artist || '';
     document.getElementById('relCover').value = rel.cover || '';
     document.getElementById('relUrl').value = rel.url || '';
-
-    if (rel.cover) {
-        document.getElementById('relCoverPreview').src = rel.cover;
-        document.getElementById('relCoverPreview').style.display = 'block';
-    }
-
+    if (rel.cover) { document.getElementById('relCoverPreview').src = rel.cover; document.getElementById('relCoverPreview').style.display = 'block'; }
     document.getElementById('releaseModalTitle').innerText = 'แก้ไข Release';
     document.getElementById('releaseFormModal').style.display = 'flex';
 };
@@ -669,44 +716,19 @@ window.editRelease = function(id) {
 window.saveReleaseData = async function(e) {
     e.preventDefault();
     const id = document.getElementById('relId').value;
-    const data = {
-        title: document.getElementById('relTitle').value,
-        artist: document.getElementById('relArtist').value,
-        cover: document.getElementById('relCover').value,
-        url: document.getElementById('relUrl').value
-    };
-
-    if (id) {
-        data.id = id;
-        try { await update(ref(db, `releases/${id}`), data); }
-        catch (err) {
-            const idx = store.releases.findIndex(r => r.id === id);
-            if (idx !== -1) store.releases[idx] = data;
-        }
-    } else {
-        try {
-            const newRef = push(ref(db, "releases"));
-            data.id = newRef.key;
-            await set(newRef, data);
-        } catch (err) { 
-            const newId = Date.now().toString();
-            store.releases.push({ id: newId, ...data }); 
-        }
-    }
-
-    closeModal('releaseFormModal');
-    renderPublicSite();
-    renderAdminPanel();
+    const data = { title: document.getElementById('relTitle').value, artist: document.getElementById('relArtist').value, cover: document.getElementById('relCover').value, url: document.getElementById('relUrl').value };
+    if (id) { data.id = id; try { await update(ref(db, `releases/${id}`), data); } catch (err) { const idx = store.releases.findIndex(r => r.id === id); if (idx !== -1) store.releases[idx] = data; } }
+    else { try { const newRef = push(ref(db, "releases")); data.id = newRef.key; await set(newRef, data); } catch (err) { store.releases.push({ id: Date.now().toString(), ...data }); } }
+    closeModal('releaseFormModal'); renderPublicSite(); renderAdminPanel();
 };
 
-// VIDEO MODAL ACTIONS
+// --- VIDEO MODAL ---
 window.openVideoModal = function() {
     document.getElementById('vidId').value = '';
     document.getElementById('vidTitle').value = '';
     document.getElementById('vidType').value = 'ig';
     document.getElementById('vidVal').value = '';
     toggleVideoTypeInput();
-
     document.getElementById('videoModalTitle').innerText = 'เพิ่ม Video ใหม่';
     document.getElementById('videoFormModal').style.display = 'flex';
 };
@@ -715,25 +737,18 @@ window.toggleVideoTypeInput = function() {
     const type = document.getElementById('vidType').value;
     const label = document.getElementById('vidLabel');
     const input = document.getElementById('vidVal');
-    if (type === 'ig') {
-        label.innerText = 'Instagram Reel ID (เช่น DXO-21LkZmw)';
-        input.placeholder = 'DXO-21LkZmw';
-    } else {
-        label.innerText = 'YouTube Embed URL (เช่น https://www.youtube.com/embed/...)';
-        input.placeholder = 'https://www.youtube.com/embed/...';
-    }
+    if (type === 'ig') { label.innerText = 'Instagram Reel ID (เช่น DXO-21LkZmw)'; input.placeholder = 'DXO-21LkZmw'; }
+    else { label.innerText = 'YouTube Embed URL (เช่น https://www.youtube.com/embed/...)'; input.placeholder = 'https://www.youtube.com/embed/...'; }
 };
 
 window.editVideo = function(id) {
     const vid = store.videos.find(v => v.id === id);
     if (!vid) return;
-
     document.getElementById('vidId').value = vid.id;
     document.getElementById('vidTitle').value = vid.title || '';
     document.getElementById('vidType').value = vid.type || 'ig';
     document.getElementById('vidVal').value = vid.val || '';
     toggleVideoTypeInput();
-
     document.getElementById('videoModalTitle').innerText = 'แก้ไข Video';
     document.getElementById('videoFormModal').style.display = 'flex';
 };
@@ -741,36 +756,13 @@ window.editVideo = function(id) {
 window.saveVideoData = async function(e) {
     e.preventDefault();
     const id = document.getElementById('vidId').value;
-    const data = {
-        title: document.getElementById('vidTitle').value,
-        type: document.getElementById('vidType').value,
-        val: document.getElementById('vidVal').value
-    };
-
-    if (id) {
-        data.id = id;
-        try { await update(ref(db, `videos/${id}`), data); }
-        catch (err) {
-            const idx = store.videos.findIndex(v => v.id === id);
-            if (idx !== -1) store.videos[idx] = data;
-        }
-    } else {
-        try {
-            const newRef = push(ref(db, "videos"));
-            data.id = newRef.key;
-            await set(newRef, data);
-        } catch (err) { 
-            const newId = Date.now().toString();
-            store.videos.push({ id: newId, ...data }); 
-        }
-    }
-
-    closeModal('videoFormModal');
-    renderPublicSite();
-    renderAdminPanel();
+    const data = { title: document.getElementById('vidTitle').value, type: document.getElementById('vidType').value, val: document.getElementById('vidVal').value };
+    if (id) { data.id = id; try { await update(ref(db, `videos/${id}`), data); } catch (err) { const idx = store.videos.findIndex(v => v.id === id); if (idx !== -1) store.videos[idx] = data; } }
+    else { try { const newRef = push(ref(db, "videos")); data.id = newRef.key; await set(newRef, data); } catch (err) { store.videos.push({ id: Date.now().toString(), ...data }); } }
+    closeModal('videoFormModal'); renderPublicSite(); renderAdminPanel();
 };
 
-// MERCH MODAL ACTIONS
+// --- MERCH MODAL ---
 window.openMerchModal = function() {
     document.getElementById('mchId').value = '';
     document.getElementById('mchName').value = '';
@@ -778,7 +770,6 @@ window.openMerchModal = function() {
     document.getElementById('mchImage').value = '';
     document.getElementById('mchLink').value = '';
     document.getElementById('mchImagePreview').style.display = 'none';
-
     document.getElementById('merchModalTitle').innerText = 'เพิ่มสินค้า Merch';
     document.getElementById('merchFormModal').style.display = 'flex';
 };
@@ -786,18 +777,12 @@ window.openMerchModal = function() {
 window.editMerch = function(id) {
     const mch = store.merch.find(m => m.id === id);
     if (!mch) return;
-
     document.getElementById('mchId').value = mch.id;
     document.getElementById('mchName').value = mch.name || '';
     document.getElementById('mchPrice').value = mch.price || '';
     document.getElementById('mchImage').value = mch.image || '';
     document.getElementById('mchLink').value = mch.link || '';
-
-    if (mch.image) {
-        document.getElementById('mchImagePreview').src = mch.image;
-        document.getElementById('mchImagePreview').style.display = 'block';
-    }
-
+    if (mch.image) { document.getElementById('mchImagePreview').src = mch.image; document.getElementById('mchImagePreview').style.display = 'block'; }
     document.getElementById('merchModalTitle').innerText = 'แก้ไขสินค้า Merch';
     document.getElementById('merchFormModal').style.display = 'flex';
 };
@@ -805,77 +790,29 @@ window.editMerch = function(id) {
 window.saveMerchData = async function(e) {
     e.preventDefault();
     const id = document.getElementById('mchId').value;
-    const data = {
-        name: document.getElementById('mchName').value,
-        price: document.getElementById('mchPrice').value,
-        image: document.getElementById('mchImage').value,
-        link: document.getElementById('mchLink').value
-    };
-
-    if (id) {
-        data.id = id;
-        try { await update(ref(db, `merch/${id}`), data); }
-        catch (err) {
-            const idx = store.merch.findIndex(m => m.id === id);
-            if (idx !== -1) store.merch[idx] = data;
-        }
-    } else {
-        try {
-            const newRef = push(ref(db, "merch"));
-            data.id = newRef.key;
-            await set(newRef, data);
-        } catch (err) { 
-            const newId = Date.now().toString();
-            store.merch.push({ id: newId, ...data }); 
-        }
-    }
-
-    closeModal('merchFormModal');
-    renderPublicSite();
-    renderAdminPanel();
+    const data = { name: document.getElementById('mchName').value, price: document.getElementById('mchPrice').value, image: document.getElementById('mchImage').value, link: document.getElementById('mchLink').value };
+    if (id) { data.id = id; try { await update(ref(db, `merch/${id}`), data); } catch (err) { const idx = store.merch.findIndex(m => m.id === id); if (idx !== -1) store.merch[idx] = data; } }
+    else { try { const newRef = push(ref(db, "merch")); data.id = newRef.key; await set(newRef, data); } catch (err) { store.merch.push({ id: Date.now().toString(), ...data }); } }
+    closeModal('merchFormModal'); renderPublicSite(); renderAdminPanel();
 };
 
-// SAVE ABOUT CULTURE
+// --- ABOUT CULTURE & DELETE ---
 window.saveAboutCulture = async function(e) {
     e.preventDefault();
-    const data = {
-        highlight: document.getElementById('editAboutHighlight').value,
-        text: document.getElementById('editAboutText').value
-    };
-
-    try {
-        await set(ref(db, "settings/about"), data);
-    } catch (err) {
-        store.about = data;
-    }
-
+    const data = { highlight: document.getElementById('editAboutHighlight').value, text: document.getElementById('editAboutText').value };
+    try { await set(ref(db, "settings/about"), data); } catch (err) { store.about = data; }
     alert('บันทึกข้อมูล Our Culture สำเร็จ!');
     renderPublicSite();
 };
 
-// DELETE ITEM GENERIC (FORCE DUAL SYNC)
 window.deleteItem = async function(colName, id) {
     if (!confirm('ยืนยันการลบรายการนี้?')) return;
-
-    // 1. Remove from local store immediately for instant UI responsiveness
-    if (store[colName]) {
-        store[colName] = store[colName].filter(item => String(item.id) !== String(id));
-    }
-
-    // 2. Immediate local re-render
+    if (store[colName]) store[colName] = store[colName].filter(item => String(item.id) !== String(id));
     renderPublicSite();
     renderAdminPanel();
-
-    // 3. Perform removal in Firebase Realtime DB
-    try {
-        await remove(ref(db, `${colName}/${id}`));
-        console.log(`Successfully removed ${id} from ${colName}`);
-    } catch (err) {
-        console.warn(`Realtime DB deletion fallback note:`, err);
-    }
+    try { await remove(ref(db, `${colName}/${id}`)); } catch (err) {}
 };
 
-// INITIALIZE APP ON LOAD
 document.addEventListener('DOMContentLoaded', () => {
     initFirebaseSync();
     renderPublicSite();
